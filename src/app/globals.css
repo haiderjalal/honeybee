@@ -1,0 +1,406 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-950: #0c0804;
+  --color-ink-900: #140e07;
+  --color-ink-800: #1f170c;
+  --color-ink-700: #2e2313;
+  --color-ink-600: #45351d;
+
+  --color-cream-50: #fbf5e8;
+  --color-cream-100: #f4e8cf;
+  --color-cream-300: #d9c59c;
+  --color-cream-500: #a8946c;
+
+  --color-gold-200: #ffe6a6;
+  --color-gold-300: #ffd77a;
+  --color-gold-400: #f6bd3c;
+  --color-gold-500: #e09a12;
+  --color-gold-600: #b8770a;
+  --color-amber-800: #6b3a06;
+
+  --color-success: #7ed39a;
+  --color-danger: #ff8f80;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-honey: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drip: cubic-bezier(0.55, 0, 0.85, 0.35);
+}
+
+:root {
+  color-scheme: dark;
+  /* Default honey tint; sections override these to recolour all honey artwork. */
+  --honey-light: #f3a943;
+  --honey-base: #b9650f;
+  --honey-deep: #5e2905;
+}
+
+html {
+  background: var(--color-ink-950);
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgb(224 154 18 / 0.14), transparent 60%),
+    radial-gradient(50rem 30rem at -10% 30%, rgb(184 119 10 / 0.08), transparent 60%), var(--color-ink-950);
+  color: var(--color-cream-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-gold-400);
+  color: var(--color-ink-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-300);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Lenis smooth scroll ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------- Intro overlay gating (data-intro is set by an inline head script) ---------- */
+html[data-intro="playing"] {
+  overflow: hidden;
+}
+.intro-overlay {
+  display: none;
+}
+html[data-intro="playing"] .intro-overlay {
+  display: grid;
+}
+
+/* Visible from the first paint (it is the LCP element during the intro); only its scale animates. */
+.intro-wordmark {
+  animation: wordmark-in 2200ms var(--ease-honey) both;
+}
+.intro-overlay.is-bursting {
+  background-color: transparent;
+  transition: background-color 700ms var(--ease-honey);
+}
+.intro-overlay.is-bursting .intro-wordmark {
+  animation: wordmark-out 650ms var(--ease-honey) forwards;
+}
+
+@keyframes wordmark-in {
+  from {
+    scale: 0.9;
+  }
+  to {
+    scale: 1;
+  }
+}
+/* The page underneath is fully covered during the intro; don't spend frames animating it. */
+html[data-intro="playing"] main *,
+html[data-intro="playing"] main *::before {
+  animation-play-state: paused !important;
+}
+html[data-intro="playing"] .intro-overlay * {
+  animation-play-state: running !important;
+}
+@keyframes wordmark-out {
+  to {
+    opacity: 0;
+    scale: 1.35;
+    filter: blur(10px);
+  }
+}
+
+/* ---------- Hero reveal: waits until the intro has finished ---------- */
+.hero-reveal {
+  opacity: 0;
+  translate: 0 28px;
+}
+html:not([data-intro="playing"]) .hero-reveal {
+  animation: rise-in 1000ms var(--ease-honey) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 80ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal,
+  html:not([data-intro="playing"]) .hero-reveal {
+    opacity: 1;
+    translate: none;
+    animation: none;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ---------- Reusable motion primitives ---------- */
+.bee-wing {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: wing-flap 90ms linear infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes wing-flap {
+  from {
+    scale: 1 1;
+  }
+  to {
+    scale: 1 0.35;
+  }
+}
+
+.honey-wave {
+  animation: wave-drift 3.2s linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes wave-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -100px 0;
+  }
+}
+
+.float-bob {
+  animation: float-bob 5s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes float-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -14px;
+  }
+}
+
+.honey-drip {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: drip-fall 2.4s var(--ease-drip) infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0;
+  }
+}
+@keyframes drip-fall {
+  0% {
+    translate: 0 0;
+    scale: 0.4 0.2;
+    opacity: 0;
+  }
+  25% {
+    scale: 1 1;
+    opacity: 1;
+  }
+  70% {
+    translate: 0 6px;
+    scale: 0.9 1.25;
+  }
+  100% {
+    translate: 0 120px;
+    scale: 0.7 1.4;
+    opacity: 0;
+  }
+}
+
+.honey-flow {
+  animation: honey-flow 700ms linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes honey-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+/* Bees that orbit along a path (hero). */
+.bee-orbit {
+  offset-rotate: auto 90deg;
+  animation: bee-orbit var(--orbit-duration, 14s) linear infinite;
+  animation-delay: var(--orbit-delay, 0s);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    offset-distance: 30%;
+  }
+}
+@keyframes bee-orbit {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+.pollen {
+  animation: pollen-rise var(--pollen-duration, 12s) linear infinite;
+  animation-delay: var(--pollen-delay, 0s);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0.3;
+  }
+}
+@keyframes pollen-rise {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    translate: var(--pollen-drift, 20px) -70vh;
+    opacity: 0;
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+/* Opacity-only so the blurred layer is rasterised once and animated on the compositor. */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Scroll-driven parallax for decorative hero layers (progressive enhancement). */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax-slow {
+      animation: parallax-slow linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+    .parallax-fast {
+      animation: parallax-fast linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes parallax-slow {
+  to {
+    translate: 0 12vh;
+  }
+}
+@keyframes parallax-fast {
+  to {
+    translate: 0 -18vh;
+    opacity: 0.2;
+  }
+}
+
+/* Scroll-into-view reveal (see components/shared/Reveal.tsx). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry var(--reveal-delay, 0px) entry calc(60% + var(--reveal-delay, 0px));
+    }
+  }
+}
+
+/* Off-screen SVG animations still repaint on the main thread; pause them (see PauseOffscreen). */
+[data-offscreen] *,
+[data-offscreen] *::before {
+  animation-play-state: paused !important;
+}
+
+/*
+ * Below-the-fold sections: skip layout/paint until they approach the viewport.
+ * Never use on the hero, the sticky Pour Story or the Honey Lab (jars are dragged outside its box).
+ */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto var(--defer-height, 900px);
+}
+
+/* Gold gradient text */
+.text-gold {
+  background: linear-gradient(100deg, var(--color-gold-200) 0%, var(--color-gold-400) 40%, var(--color-gold-600) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Cart drawer (native <dialog>) ---------- */
+.cart-drawer {
+  translate: 100% 0;
+  transition:
+    translate 450ms var(--ease-honey),
+    display 450ms allow-discrete,
+    overlay 450ms allow-discrete;
+  &[open] {
+    translate: 0 0;
+    @starting-style {
+      translate: 100% 0;
+    }
+  }
+  &::backdrop {
+    background: rgb(12 8 4 / 0);
+    backdrop-filter: blur(0);
+    transition:
+      background 450ms,
+      backdrop-filter 450ms,
+      display 450ms allow-discrete,
+      overlay 450ms allow-discrete;
+  }
+  &[open]::backdrop {
+    background: rgb(12 8 4 / 0.6);
+    backdrop-filter: blur(4px);
+    @starting-style {
+      background: rgb(12 8 4 / 0);
+      backdrop-filter: blur(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  clip-path: inset(50%);
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
