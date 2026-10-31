@@ -25,12 +25,12 @@ export function CheckoutView() {
   if (status === "success" && reference) return <SuccessState reference={reference} />;
 
   if (!hasHydrated) {
-    return <div className="h-96 animate-pulse rounded-3xl bg-ink-800/50" aria-label="Loading your hive" />;
+    return <div className="h-96 animate-pulse rounded-3xl bg-forest-800/50" aria-label="Loading your hive" />;
   }
 
   if (lines.length === 0) {
     return (
-      <div className="mx-auto flex max-w-lg flex-col items-center gap-5 rounded-3xl border border-cream-50/10 bg-ink-900/60 px-8 py-16 text-center">
+      <div className="mx-auto flex max-w-lg flex-col items-center gap-5 rounded-3xl border border-cream-50/10 bg-forest-900/60 px-8 py-16 text-center">
         <div className="h-32 w-24">
           <HoneyJar fill={0} lid={0} className="size-full" />
         </div>
@@ -47,7 +47,7 @@ export function CheckoutView() {
     <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
       <section
         aria-labelledby="details-title"
-        className="rounded-3xl border border-cream-50/10 bg-ink-900/60 p-6 sm:p-10"
+        className="rounded-3xl border border-cream-50/10 bg-forest-900/60 p-6 sm:p-10"
       >
         <h2 id="details-title" className="mb-6 font-display text-3xl text-cream-50">
           Your details
@@ -65,7 +65,7 @@ export function CheckoutView() {
 
       <aside
         aria-labelledby="summary-title"
-        className="h-fit rounded-3xl border border-gold-400/20 bg-ink-800/60 p-6 sm:p-8 lg:sticky lg:top-24"
+        className="h-fit rounded-3xl border border-gold-400/20 bg-forest-800/60 p-6 sm:p-8 lg:sticky lg:top-24"
       >
         <h2 id="summary-title" className="font-display text-2xl text-cream-50">
           Order summary
@@ -96,7 +96,7 @@ function SuccessState({ reference }: { reference: string }) {
       initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto flex max-w-xl flex-col items-center gap-5 overflow-hidden rounded-[2rem] border border-gold-400/30 bg-ink-900/70 px-8 py-16 text-center"
+      className="relative mx-auto flex max-w-xl flex-col items-center gap-5 overflow-hidden rounded-[2rem] border border-gold-400/30 bg-forest-900/70 px-8 py-16 text-center"
       role="status"
     >
       {!reduceMotion

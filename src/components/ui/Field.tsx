@@ -3,7 +3,7 @@ import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "rea
 import { cn } from "@/utils/cn";
 
 const CONTROL =
-  "w-full min-h-12 rounded-xl border border-cream-500/30 bg-ink-900/70 px-4 py-3 text-base text-cream-50 placeholder:text-cream-500/70 transition-colors focus-visible:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/40 aria-invalid:border-danger";
+  "w-full min-h-12 rounded-xl border border-cream-500/30 bg-forest-900/70 px-4 py-3 text-base text-cream-50 placeholder:text-cream-500/70 transition-colors focus-visible:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/40 aria-invalid:border-danger";
 
 interface FieldShellProps {
   id: string;

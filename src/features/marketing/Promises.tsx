@@ -32,7 +32,7 @@ export function Promises() {
             return (
               <li key={promise.title}>
                 <Reveal delay={index * 0.08} className="h-full">
-                  <div className="h-full rounded-3xl border border-cream-50/10 bg-ink-900/60 p-7">
+                  <div className="h-full rounded-3xl border border-cream-50/10 bg-forest-900/60 p-7">
                     <span className="grid size-12 place-items-center rounded-2xl bg-gold-400/10 text-gold-300 ring-1 ring-gold-400/30">
                       <Icon className="size-6" aria-hidden="true" />
                     </span>

@@ -9,7 +9,7 @@ import { Logo } from "./Logo";
 
 export function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-30 border-b border-cream-50/5 bg-ink-950/70 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-30 border-b border-cream-50/5 bg-forest-950/70 backdrop-blur-xl">
       <Container className="flex h-18 items-center justify-between gap-6">
         <Link href={ROUTES.home} aria-label="Honeybee home" className="rounded-lg">
           <Logo />
@@ -21,7 +21,7 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="rounded-full px-4 py-2 text-sm text-cream-300 transition-colors hover:bg-cream-50/5 hover:text-gold-300"
+                  className="nav-link rounded-full px-4 py-2 text-sm text-cream-300 transition-colors hover:text-gold-300"
                 >
                   {link.label}
                 </Link>
@@ -47,7 +47,7 @@ export function Navbar() {
         id="mobile-menu"
         popover="auto"
         aria-label="Mobile"
-        className="[inset:auto_1rem_auto_auto] m-0 mt-18 ml-auto w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-gold-400/20 bg-ink-900/95 p-3 text-cream-100 shadow-2xl backdrop-blur-xl md:hidden"
+        className="[inset:auto_1rem_auto_auto] m-0 mt-18 ml-auto w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-gold-400/20 bg-forest-900/95 p-3 text-cream-100 shadow-2xl backdrop-blur-xl md:hidden"
       >
         <ul className="flex flex-col">
           {NAV_LINKS.map((link) => (

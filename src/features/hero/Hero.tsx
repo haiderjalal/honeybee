@@ -9,7 +9,10 @@ import { SECTION_IDS } from "@/constants/routes";
 import { getVarieties } from "@/services/catalog.service";
 import { honeyStyle } from "@/utils/honeyStyle";
 
+import { RevealWords } from "@/components/shared/RevealWords";
+
 import { HeroBackdrop } from "./HeroBackdrop";
+import { HeroSpotlight } from "./HeroSpotlight";
 
 const ORBITS = [
   {
@@ -44,11 +47,12 @@ export function Hero() {
       className="relative isolate overflow-hidden pt-28 pb-20 sm:pt-36 lg:min-h-[100svh] lg:pb-28"
     >
       <HeroBackdrop />
+      <HeroSpotlight />
 
       <Container className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
         <div className="relative z-10 flex flex-col items-start gap-7">
           <p
-            className="hero-reveal flex items-center gap-3 rounded-full border border-gold-400/30 bg-ink-900/60 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-gold-300 uppercase backdrop-blur"
+            className="hero-reveal flex items-center gap-3 rounded-full border border-gold-400/30 bg-forest-900/60 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-gold-300 uppercase backdrop-blur"
             style={reveal(0)}
           >
             <span aria-hidden="true" className="size-1.5 rounded-full bg-gold-400 shadow-[0_0_12px_#f6bd3c]" />
@@ -60,7 +64,8 @@ export function Hero() {
             className="hero-reveal font-display text-5xl leading-[0.95] font-medium tracking-tight text-balance text-cream-50 sm:text-7xl xl:text-8xl"
             style={reveal(1)}
           >
-            Liquid gold, <span className="text-gold italic">straight from the hive.</span>
+            <RevealWords text="Liquid gold," />{" "}
+            <RevealWords text="straight from the hive." className="text-gold italic" startAt={2} />
           </h1>
 
           <p className="hero-reveal max-w-xl text-lg text-pretty text-cream-300 sm:text-xl" style={reveal(2)}>

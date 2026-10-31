@@ -18,7 +18,7 @@ export function Faq() {
     >
       <Container className="max-w-4xl">
         <SectionHeading id="faq-title" eyebrow="Questions" title="Good to know" />
-        <div className="mt-12 divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 bg-ink-900/50">
+        <div className="mt-12 divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 bg-forest-900/50">
           {FAQ_ITEMS.map((item) => (
             <details key={item.question} name="faq" className="group px-6 sm:px-8">
               <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-xl text-cream-50 marker:hidden [&::-webkit-details-marker]:hidden">

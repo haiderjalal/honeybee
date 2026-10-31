@@ -11,9 +11,9 @@ const BASE =
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-linear-to-b from-gold-300 to-gold-500 text-ink-950 shadow-[0_10px_30px_-10px_rgb(224_154_18/0.8),inset_0_1px_0_rgb(255_255_255/0.5)] hover:from-gold-200 hover:to-gold-400 hover:shadow-[0_14px_40px_-10px_rgb(246_189_60/0.9),inset_0_1px_0_rgb(255_255_255/0.6)]",
+    "sheen bg-linear-to-b from-gold-300 to-gold-500 text-forest-950 shadow-[0_10px_30px_-10px_rgb(224_154_18/0.8),inset_0_1px_0_rgb(255_255_255/0.5)] hover:from-gold-200 hover:to-gold-400 hover:shadow-[0_14px_40px_-10px_rgb(246_189_60/0.9),inset_0_1px_0_rgb(255_255_255/0.6)]",
   secondary:
-    "border border-gold-400/40 bg-ink-800/60 text-cream-50 backdrop-blur hover:border-gold-300 hover:bg-ink-700/70",
+    "border border-gold-400/40 bg-forest-800/60 text-cream-50 backdrop-blur hover:border-gold-300 hover:bg-forest-700/70",
   ghost: "text-cream-100 hover:bg-cream-50/5 hover:text-gold-300",
 };
 

@@ -4,6 +4,8 @@ import { NAV_LINKS, ROUTES } from "@/constants/routes";
 import { SITE, whatsappUrl } from "@/constants/site";
 import { getVarieties } from "@/services/catalog.service";
 
+import { DripEdge } from "@/components/art/DripEdge";
+
 import { Container } from "./Container";
 import { Logo } from "./Logo";
 
@@ -11,7 +13,8 @@ export function Footer() {
   const whatsapp = whatsappUrl("Hi Honeybee, I have a question about your honey.");
 
   return (
-    <footer className="relative mt-24 border-t border-gold-400/15 bg-ink-900/60">
+    <footer className="relative mt-24 border-t border-gold-400/15 bg-forest-900/60">
+      <DripEdge />
       <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="space-y-4">
           <Logo />

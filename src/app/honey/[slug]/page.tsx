@@ -117,7 +117,7 @@ export default async function VarietyPage({ params }: PageProps) {
           <h2 id="facts-title" className="font-display text-4xl text-cream-50">
             About {variety.name.toLowerCase()}
           </h2>
-          <dl className="divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 bg-ink-900/60 px-6 sm:px-8">
+          <dl className="bg-ink-900/60 divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 px-6 sm:px-8">
             {facts.map(([term, detail]) => (
               <div key={term} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr]">
                 <dt className="text-sm text-cream-500">{term}</dt>
@@ -142,7 +142,7 @@ export default async function VarietyPage({ params }: PageProps) {
               <li key={other.slug}>
                 <Link
                   href={ROUTES.variety(other.slug)}
-                  className="flex items-center gap-5 rounded-3xl border border-cream-50/10 bg-ink-900/60 p-5 transition-colors hover:border-gold-400/40"
+                  className="bg-ink-900/60 flex items-center gap-5 rounded-3xl border border-cream-50/10 p-5 transition-colors hover:border-gold-400/40"
                   style={honeyStyle(other.palette)}
                 >
                   <span className="h-20 w-14 shrink-0">

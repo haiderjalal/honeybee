@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { AppProviders } from "@/components/layout/AppProviders";
@@ -15,8 +15,15 @@ import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
 
 import "./globals.css";
 
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+// Cormorant Garamond gives the editorial, luxury display voice; Manrope keeps body copy crisp and modern.
+const displayFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+const bodyFont = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -55,20 +62,21 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0c0804",
+  themeColor: "#06130e",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en-PK" className={`${fraunces.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en-PK" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: INTRO_GATE_SCRIPT }} />
       </head>
       <body className="min-h-dvh">
+        <div aria-hidden="true" className="scroll-progress" />
         <a
           href="#main"
-          className="fixed top-3 left-3 z-[200] -translate-y-24 rounded-full bg-gold-400 px-4 py-2 font-medium text-ink-950 focus-visible:translate-y-0"
+          className="fixed top-3 left-3 z-[200] -translate-y-24 rounded-full bg-gold-400 px-4 py-2 font-medium text-forest-950 focus-visible:translate-y-0"
         >
           Skip to content
         </a>

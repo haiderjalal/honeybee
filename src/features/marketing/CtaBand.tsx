@@ -13,7 +13,7 @@ export function CtaBand() {
       style={{ "--defer-height": "500px" } as CSSProperties}
     >
       <Container>
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-gold-400/30 bg-linear-to-br from-gold-500/25 via-ink-800 to-ink-900 px-6 py-16 text-center sm:px-16">
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-gold-400/30 bg-linear-to-br from-gold-500/25 via-forest-800 to-forest-900 px-6 py-16 text-center sm:px-16">
           <div
             aria-hidden="true"
             className="glow-pulse absolute -top-32 left-1/2 size-96 -translate-x-1/2 rounded-full bg-gold-400/30 blur-3xl"

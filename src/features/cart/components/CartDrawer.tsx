@@ -36,7 +36,7 @@ export function CartDrawer() {
         if (event.target === event.currentTarget) closeDrawer();
       }}
       aria-labelledby="cart-title"
-      className="cart-drawer m-0 ms-auto h-dvh max-h-dvh w-full max-w-md border-l border-gold-400/20 bg-ink-900 p-0 text-cream-100 shadow-2xl"
+      className="cart-drawer m-0 ms-auto h-dvh max-h-dvh w-full max-w-md border-l border-gold-400/20 bg-forest-900 p-0 text-cream-100 shadow-2xl"
     >
       <div className="flex h-full flex-col">
         <header className="flex items-center justify-between border-b border-cream-500/15 px-6 py-5">

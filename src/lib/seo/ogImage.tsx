@@ -31,7 +31,7 @@ export function renderOgImage({ eyebrow, title, subtitle, palette }: OgOptions):
         width: "100%",
         height: "100%",
         display: "flex",
-        background: "radial-gradient(circle at 80% 20%, #3a2507 0%, #0c0804 60%)",
+        background: "radial-gradient(circle at 80% 20%, #1a4232 0%, #06130e 60%)",
         color: "#fbf5e8",
         padding: 72,
         position: "relative",

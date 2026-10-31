@@ -21,7 +21,7 @@ export function CartNavButton() {
       <ShoppingBag className="size-4" aria-hidden="true" />
       <span className="hidden sm:inline">Hive</span>
       {showCount ? (
-        <span className="grid min-w-6 place-items-center rounded-full bg-gold-400 px-1.5 text-xs font-bold text-ink-950 tabular-nums">
+        <span className="grid min-w-6 place-items-center rounded-full bg-gold-400 px-1.5 text-xs font-bold text-forest-950 tabular-nums">
           {count}
         </span>
       ) : null}
