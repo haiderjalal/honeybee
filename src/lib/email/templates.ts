@@ -22,7 +22,7 @@ function layout(title: string, body: string): string {
   return `<!doctype html><html><body style="margin:0;background:#f6efe1;font-family:Arial,Helvetica,sans-serif;color:#2a1a08">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fffaf0;border-radius:16px;border:1px solid #ecd9b0;overflow:hidden">
-<tr><td style="background:#140e07;padding:24px 28px;color:#f6bd3c;font-family:Georgia,serif;font-size:26px">${SITE.name}</td></tr>
+<tr><td style="background:#0b1f17;padding:24px 28px;color:#f6bd3c;font-family:Georgia,serif;font-size:26px">${SITE.name}</td></tr>
 <tr><td style="padding:28px"><h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:22px;color:#2a1a08">${escapeHtml(title)}</h1>${body}</td></tr>
 </table></td></tr></table></body></html>`;
 }

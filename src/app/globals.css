@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink-950: #0c0804;
-  --color-ink-900: #140e07;
-  --color-ink-800: #1f170c;
-  --color-ink-700: #2e2313;
-  --color-ink-600: #45351d;
+  --color-forest-950: #06130e;
+  --color-forest-900: #0b1f17;
+  --color-forest-800: #12302a;
+  --color-forest-700: #1c3d33;
+  --color-forest-600: #2b5a46;
+
+  /* Second accent: sage mint, used for glows and secondary highlights against the forest base. */
+  --color-sage-200: #d6ecdf;
+  --color-sage-300: #b5d9c2;
+  --color-sage-400: #8fc4a4;
+  --color-sage-500: #5f9c7c;
 
   --color-cream-50: #fbf5e8;
   --color-cream-100: #f4e8cf;
@@ -22,8 +28,8 @@
   --color-success: #7ed39a;
   --color-danger: #ff8f80;
 
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Garamond, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
   --ease-honey: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-drip: cubic-bezier(0.55, 0, 0.85, 0.35);
@@ -38,14 +44,16 @@
 }
 
 html {
-  background: var(--color-ink-950);
+  background: var(--color-forest-950);
   scroll-padding-top: 5rem;
 }
 
+/* Forest base lit by a sage glow (top right) and a warm honey glow (top left). */
 body {
   background:
-    radial-gradient(60rem 40rem at 85% -10%, rgb(224 154 18 / 0.14), transparent 60%),
-    radial-gradient(50rem 30rem at -10% 30%, rgb(184 119 10 / 0.08), transparent 60%), var(--color-ink-950);
+    radial-gradient(70rem 46rem at 92% -12%, rgb(95 156 124 / 0.22), transparent 62%),
+    radial-gradient(56rem 36rem at -8% 18%, rgb(224 154 18 / 0.12), transparent 60%),
+    radial-gradient(60rem 40rem at 50% 115%, rgb(43 90 70 / 0.45), transparent 65%), var(--color-forest-950);
   color: var(--color-cream-100);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -54,7 +62,7 @@ body {
 
 ::selection {
   background: var(--color-gold-400);
-  color: var(--color-ink-950);
+  color: var(--color-forest-950);
 }
 
 :focus-visible {
@@ -350,12 +358,267 @@ html:not([data-intro="playing"]) .hero-reveal {
   contain-intrinsic-size: auto none auto var(--defer-height, 900px);
 }
 
-/* Gold gradient text */
+/* ---------- Brand motion ---------- */
+
+/* Gold text with a slow light sweep across the letters. */
 .text-gold {
-  background: linear-gradient(100deg, var(--color-gold-200) 0%, var(--color-gold-400) 40%, var(--color-gold-600) 100%);
+  background: linear-gradient(
+    100deg,
+    var(--color-gold-200) 0%,
+    var(--color-gold-400) 35%,
+    var(--color-gold-300) 50%,
+    var(--color-gold-400) 65%,
+    var(--color-gold-600) 100%
+  );
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: gold-sweep 7s ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes gold-sweep {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Reading-progress bar pinned to the top edge, driven by page scroll. */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 80;
+  height: 3px;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--color-gold-600), var(--color-gold-300), var(--color-sage-300));
+  box-shadow: 0 0 14px rgb(246 189 60 / 0.6);
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes grow-x {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Aurora: large soft colour blooms that drift behind the hero. */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: aurora-drift 18s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+.aurora-sage {
+  background: radial-gradient(circle, rgb(143 196 164 / 0.55), transparent 65%);
+}
+.aurora-gold {
+  background: radial-gradient(circle, rgb(246 189 60 / 0.4), transparent 65%);
+  animation-duration: 22s;
+  animation-direction: reverse;
+}
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4vw, -3vh, 0) scale(1.12);
+  }
+}
+
+/* Cursor spotlight inside the hero; the client component sets --sx, --sy and --so. */
+.hero-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle 460px at var(--sx, 50%) var(--sy, 40%), rgb(143 196 164 / 0.16), transparent 70%);
+  opacity: var(--so, 0);
+  transition: opacity 600ms var(--ease-honey);
+}
+
+/* Hero headline: each word rises out of a soft blur, staggered. */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  translate: 0 60%;
+  filter: blur(8px);
+}
+html:not([data-intro="playing"]) .hero-word {
+  animation: word-in 950ms var(--ease-honey) both;
+  animation-delay: calc(var(--w, 0) * 90ms + 260ms);
+}
+/* Ends on `filter: none` (not blur(0)) so the gold gradient clip on the parent still applies. */
+@keyframes word-in {
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  html:not([data-intro="playing"]) .hero-word {
+    opacity: 1;
+    translate: none;
+    filter: none;
+    animation: none;
+  }
+}
+
+/* Section titles rise and sharpen as they enter the viewport (scroll-driven, no JavaScript). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .title-reveal {
+      animation: title-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+    /* Line that draws across a timeline as the section scrolls past. */
+    .draw-x {
+      transform-origin: 0 50%;
+      animation: draw-x linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 45%;
+    }
+  }
+}
+@keyframes title-in {
+  from {
+    opacity: 0;
+    translate: 0 36px;
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: none;
+  }
+}
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Light sweep that passes across a surface on hover. */
+.sheen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.2) 50%, transparent 65%);
+  translate: -120% 0;
+  transition: translate 900ms var(--ease-honey);
+  pointer-events: none;
+}
+.sheen:hover::after,
+.sheen:focus-visible::after {
+  translate: 120% 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheen::after {
+    display: none;
+  }
+}
+
+/* Continuous ticker of honey varieties; the content is duplicated so the loop is seamless. */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    translate: -50% 0;
+  }
+}
+
+/* Honey drips hanging from an edge (used under the footer's top border). */
+.edge-drip {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: edge-drip 3.8s var(--ease-drip) infinite;
+  animation-delay: var(--drip-delay, 0s);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@keyframes edge-drip {
+  0% {
+    opacity: 0;
+    scale: 1 0.2;
+  }
+  15% {
+    opacity: 1;
+    scale: 1 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 28px;
+    scale: 1 1.3;
+  }
+}
+
+/* Underline that grows from the centre on hover for navigation links. */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 1rem;
+  bottom: 0.4rem;
+  height: 1px;
+  background: var(--color-gold-400);
+  transform: scaleX(0);
+  transition: transform 450ms var(--ease-honey);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Film grain over the whole page: adds texture to the flat forest colour. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 /* ---------- Cart drawer (native <dialog>) ---------- */
@@ -372,7 +635,7 @@ html:not([data-intro="playing"]) .hero-reveal {
     }
   }
   &::backdrop {
-    background: rgb(12 8 4 / 0);
+    background: rgb(6 19 14 / 0);
     backdrop-filter: blur(0);
     transition:
       background 450ms,
@@ -381,10 +644,10 @@ html:not([data-intro="playing"]) .hero-reveal {
       overlay 450ms allow-discrete;
   }
   &[open]::backdrop {
-    background: rgb(12 8 4 / 0.6);
+    background: rgb(6 19 14 / 0.6);
     backdrop-filter: blur(4px);
     @starting-style {
-      background: rgb(12 8 4 / 0);
+      background: rgb(6 19 14 / 0);
       backdrop-filter: blur(0);
     }
   }

@@ -64,7 +64,7 @@ export function SwarmIntro() {
   return (
     <div
       className={cn(
-        "intro-overlay fixed inset-0 z-[100] place-items-center bg-ink-950",
+        "intro-overlay fixed inset-0 z-[100] place-items-center bg-forest-950",
         "bg-[radial-gradient(60rem_40rem_at_50%_50%,rgb(224_154_18/0.12),transparent_70%)]",
         phase === "burst" && "is-bursting",
       )}
@@ -75,14 +75,14 @@ export function SwarmIntro() {
         <p className="font-display text-6xl font-medium tracking-tight text-cream-50 drop-shadow-[0_4px_30px_rgb(0_0_0/0.7)] sm:text-8xl">
           Honeybee
         </p>
-        <p className="mx-auto mt-4 w-fit rounded-full bg-ink-950/75 px-4 py-1.5 text-xs font-semibold tracking-[0.4em] text-gold-200 uppercase sm:text-sm">
+        <p className="mx-auto mt-4 w-fit rounded-full bg-forest-950/75 px-4 py-1.5 text-xs font-semibold tracking-[0.4em] text-gold-200 uppercase sm:text-sm">
           Raw honey · Pakistan
         </p>
       </div>
       <button
         type="button"
         onClick={skip}
-        className="absolute right-5 bottom-5 rounded-full border border-cream-50/25 bg-ink-950/50 px-5 py-2.5 text-sm text-cream-100 backdrop-blur transition-colors hover:border-gold-300 hover:text-gold-300"
+        className="absolute right-5 bottom-5 rounded-full border border-cream-50/25 bg-forest-950/50 px-5 py-2.5 text-sm text-cream-100 backdrop-blur transition-colors hover:border-gold-300 hover:text-gold-300"
       >
         Skip intro
       </button>

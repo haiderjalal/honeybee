@@ -14,7 +14,10 @@ const POLLEN = Array.from({ length: 18 }, (_, i) => ({
 
 export function HeroBackdrop() {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div className="aurora aurora-sage -top-40 -left-32 size-[32rem] sm:size-[44rem]" />
+      {/* The gold bloom is skipped on phones: a second large blur is the costliest layer on low-end GPUs. */}
+      <div className="aurora aurora-gold top-1/3 -right-40 hidden size-[36rem] sm:block" />
       <svg className="parallax-slow absolute inset-0 size-full opacity-[0.07]" preserveAspectRatio="xMidYMid slice">
         <defs>
           <pattern id="hero-hex" width="60" height="104" patternUnits="userSpaceOnUse">
@@ -51,7 +54,7 @@ export function HeroBackdrop() {
         />
       ))}
 
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-ink-950" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-forest-950" />
     </div>
   );
 }

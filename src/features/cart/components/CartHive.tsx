@@ -42,7 +42,7 @@ export function CartHive() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
-            className="absolute right-0 bottom-full mb-3 rounded-full bg-gold-400 px-4 py-1.5 text-sm font-semibold whitespace-nowrap text-ink-950 shadow-lg"
+            className="absolute right-0 bottom-full mb-3 rounded-full bg-gold-400 px-4 py-1.5 text-sm font-semibold whitespace-nowrap text-forest-950 shadow-lg"
             aria-hidden="true"
           >
             {isOver ? "Release to add" : "Drop the jar here"}
@@ -92,7 +92,7 @@ export function CartHive() {
               />
             ) : null}
           </svg>
-          <svg viewBox="0 0 24 24" className="relative size-8 text-ink-950" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="relative size-8 text-forest-950" aria-hidden="true">
             <path
               fill="currentColor"
               d="M7 7V6a5 5 0 0 1 10 0v1h2.2a1 1 0 0 1 1 .92l.9 12A1 1 0 0 1 20.1 21H3.9a1 1 0 0 1-1-1.08l.9-12A1 1 0 0 1 4.8 7H7Zm2 0h6V6a3 3 0 0 0-6 0v1Z"
@@ -100,7 +100,7 @@ export function CartHive() {
           </svg>
         </span>
         {hasHydrated && count > 0 ? (
-          <span className="absolute -top-1 -right-1 grid min-w-7 place-items-center rounded-full border-2 border-ink-950 bg-cream-50 px-1.5 text-sm font-bold text-ink-950 tabular-nums">
+          <span className="absolute -top-1 -right-1 grid min-w-7 place-items-center rounded-full border-2 border-forest-950 bg-cream-50 px-1.5 text-sm font-bold text-forest-950 tabular-nums">
             {count}
           </span>
         ) : null}

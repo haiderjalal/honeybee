@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/shared/JsonLd";
 import { PauseOffscreen } from "@/components/shared/PauseOffscreen";
 import { VarietyShowcase } from "@/features/catalog/VarietyShowcase";
 import { Hero } from "@/features/hero/Hero";
+import { Marquee } from "@/features/marketing/Marquee";
 import { HoneyLabSection } from "@/features/honey-lab/HoneyLabSection";
 import { SwarmIntro } from "@/features/intro/SwarmIntro";
 import { CtaBand } from "@/features/marketing/CtaBand";
@@ -25,6 +26,7 @@ export default function HomePage() {
     <>
       <SwarmIntro />
       <Hero />
+      <Marquee />
       <PourStory varieties={varieties} sizes={getJarSizes()} />
       <HoneyLabSection />
       <VarietyShowcase />

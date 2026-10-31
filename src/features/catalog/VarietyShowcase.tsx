@@ -39,7 +39,7 @@ export function VarietyShowcase() {
             <li key={variety.slug}>
               <Reveal delay={index * 0.12} className="h-full">
                 <article
-                  className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-cream-50/10 bg-linear-to-b from-ink-800/80 to-ink-900/90 p-8 transition-[border-color,translate] duration-500 hover:-translate-y-2 hover:border-gold-400/40"
+                  className="sheen group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-cream-50/10 bg-linear-to-b from-forest-800/80 to-forest-900/90 p-8 transition-[border-color,translate] duration-500 hover:-translate-y-2 hover:border-gold-400/40"
                   style={honeyStyle(variety.palette)}
                 >
                   <div

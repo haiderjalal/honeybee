@@ -30,7 +30,7 @@ export function Process() {
         <div className="relative mt-16">
           <div
             aria-hidden="true"
-            className="absolute top-8 right-[10%] left-[10%] hidden h-px bg-linear-to-r from-transparent via-gold-400/50 to-transparent md:block"
+            className="draw-x absolute top-8 right-[10%] left-[10%] hidden h-px bg-linear-to-r from-transparent via-gold-400/50 to-transparent md:block"
           />
           <ol className="relative grid gap-8 md:grid-cols-5 md:gap-4">
             {ORDER_STEPS.map((step, index) => (
@@ -40,7 +40,7 @@ export function Process() {
                     <svg viewBox="0 0 64 64" className="absolute inset-0 size-full" aria-hidden="true">
                       <polygon
                         points={hexPointsAttr(32, 32, 30)}
-                        fill="#140e07"
+                        fill="#0b1f17"
                         stroke="#f6bd3c"
                         strokeOpacity="0.7"
                         strokeWidth="1.5"

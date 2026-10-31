@@ -160,7 +160,7 @@ export function HoneyLab({ varieties, sizes }: HoneyLabProps) {
         {STATUS[phase](statusName)}
       </p>
 
-      <div className="relative mt-6 rounded-[2rem] border border-gold-400/15 bg-linear-to-b from-ink-800/70 to-ink-900/80 px-4 pt-10 pb-6 sm:px-10">
+      <div className="relative mt-6 rounded-[2rem] border border-gold-400/15 bg-linear-to-b from-forest-800/70 to-forest-900/80 px-4 pt-10 pb-6 sm:px-10">
         <ul className="grid grid-cols-3 items-end gap-3 sm:gap-8" aria-label="Jar sizes">
           {sizes.map((size) => (
             <DraggableJar
