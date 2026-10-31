@@ -3,6 +3,7 @@
 import { LazyMotion } from "motion/react";
 import { useEffect, type ReactNode } from "react";
 
+import { BeeCursor } from "@/components/shared/BeeCursor";
 import { useCartStore } from "@/features/cart/store/cartStore";
 
 import { SmoothScroll } from "./SmoothScroll";
@@ -18,6 +19,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <LazyMotion features={loadMotionFeatures} strict>
       <SmoothScroll />
+      <BeeCursor />
       {children}
     </LazyMotion>
   );
