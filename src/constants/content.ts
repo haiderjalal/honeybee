@@ -47,18 +47,22 @@ export const ORDER_STEPS = [
 
 export const PROMISES = [
   {
+    id: "raw",
     title: "Raw and unfiltered",
     body: "Never blended with syrups. Just honey, the way the hive made it.",
   },
   {
+    id: "varieties",
     title: "Three true varieties",
     body: "Sidr, Acacia and Wildflower — each with its own colour, aroma and character.",
   },
   {
+    id: "sealed",
     title: "Sealed fresh",
     body: "Every jar is sealed after pouring so it reaches you exactly as packed.",
   },
   {
+    id: "confirmation",
     title: "Personal confirmation",
     body: "A real person confirms every order with you before it ships.",
   },
