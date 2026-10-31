@@ -1,4 +1,7 @@
 import { createHexGrid, hexCorners, type HexCell, type Point } from "@/utils/hex";
+import type { RandomFn } from "@/utils/random";
+
+export { mulberry32 } from "@/utils/random";
 
 /**
  * Canvas simulation for the opening sequence:
@@ -54,20 +57,7 @@ export interface SwarmScene {
   combRadius: number;
 }
 
-export type RandomFn = () => number;
 export type Ctx2D = CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
-
-/** Small seeded PRNG so scenes are reproducible in tests. */
-export function mulberry32(seed: number): RandomFn {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
 const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;

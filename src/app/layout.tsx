@@ -10,6 +10,7 @@ import { SITE } from "@/constants/site";
 import { CartAnnouncer } from "@/features/cart/components/CartAnnouncer";
 import { CartDrawer } from "@/features/cart/components/CartDrawer";
 import { CartHive } from "@/features/cart/components/CartHive";
+import { AmbientBees } from "@/features/ambient/AmbientBees";
 import { INTRO_GATE_SCRIPT } from "@/features/intro/introState";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonLd";
 
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       </head>
       <body className="min-h-dvh">
         <div aria-hidden="true" className="scroll-progress" />
+        <AmbientBees />
         <a
           href="#main"
           className="fixed top-3 left-3 z-[200] -translate-y-24 rounded-full bg-gold-400 px-4 py-2 font-medium text-forest-950 focus-visible:translate-y-0"
