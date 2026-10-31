@@ -524,6 +524,42 @@ html:not([data-intro="playing"]) .hero-word {
   }
 }
 
+/* Honeycomb-cell icon badge: turns a third of a turn when its card is hovered. */
+.hex-badge {
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  transition: rotate 700ms var(--ease-honey);
+}
+.group:hover .hex-badge {
+  rotate: 30deg;
+}
+
+/* Pulsing ring for "we will contact you" markers. */
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid var(--color-sage-300);
+  animation: pulse-ring 2.2s var(--ease-honey) infinite;
+}
+@keyframes pulse-ring {
+  from {
+    opacity: 0.8;
+    scale: 0.6;
+  }
+  to {
+    opacity: 0;
+    scale: 1.8;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring::before,
+  .hex-badge {
+    animation: none;
+    transition: none;
+  }
+}
+
 /* Light sweep that passes across a surface on hover. */
 .sheen {
   position: relative;
