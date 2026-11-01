@@ -48,7 +48,7 @@ export default async function DiscoverPage({ params }: PageProps) {
   const others = getVarieties().filter((other) => other.slug !== variety.slug);
 
   return (
-    <article className="discover-surface pt-28 pb-8" style={honeyStyle(variety.palette)}>
+    <article className="pt-28 pb-8" style={honeyStyle(variety.palette)}>
       <Container>
         <nav aria-label="Breadcrumb" className="text-sm text-forest-800">
           <ol className="flex flex-wrap items-center gap-2">

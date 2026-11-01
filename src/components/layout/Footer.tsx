@@ -13,7 +13,7 @@ export function Footer() {
   const whatsapp = whatsappUrl("Hi HonyB, I have a question about your honey.");
 
   return (
-    <footer className="relative mt-24 border-t border-gold-400/15 bg-forest-900/60">
+    <footer className="relative mt-24 border-t border-gold-400/15 bg-forest-950">
       <DripEdge />
       <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="space-y-4">

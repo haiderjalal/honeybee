@@ -28,7 +28,7 @@ export function VarietyShowcase() {
           eyebrow="Our honey"
           title={
             <>
-              Three hives, <span className="text-gold italic">three characters.</span>
+              Three hives, <span className="text-amber-800 italic">three characters.</span>
             </>
           }
           description="Every variety comes in 500 g, 1 kg and 2 kg jars. Prices in Pakistani rupees."
@@ -39,7 +39,7 @@ export function VarietyShowcase() {
             <li key={variety.slug}>
               <Reveal delay={index * 0.12} className="h-full">
                 <article
-                  className="sheen group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-cream-50/10 bg-linear-to-b from-forest-800/80 to-forest-900/90 p-8 transition-[border-color,translate] duration-500 hover:-translate-y-2 hover:border-gold-400/40"
+                  className="sheen group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-cream-50/10 bg-linear-to-b from-forest-900 to-forest-950 p-8 transition-[border-color,translate] duration-500 hover:-translate-y-2 hover:border-gold-400/40"
                   style={honeyStyle(variety.palette)}
                 >
                   <div
