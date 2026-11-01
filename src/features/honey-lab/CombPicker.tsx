@@ -34,7 +34,7 @@ export function CombPicker({ varieties, selectedSlug, harvesting, onPick, regist
                 "disabled:cursor-wait disabled:opacity-100",
                 selected
                   ? "border-gold-400/70 bg-gold-400/10 shadow-[0_20px_60px_-20px_rgb(246_189_60/0.6)]"
-                  : "border-cream-50/10 bg-forest-900/50 hover:-translate-y-1 hover:border-gold-400/40",
+                  : "border-cream-50/10 bg-forest-950/90 hover:-translate-y-1 hover:border-gold-400/40",
               )}
             >
               <span

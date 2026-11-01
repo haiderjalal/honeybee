@@ -42,7 +42,7 @@ function Group() {
  */
 export function Marquee() {
   return (
-    <section aria-hidden="true" className="relative overflow-hidden border-y border-gold-400/15 bg-forest-900/70 py-6">
+    <section aria-hidden="true" className="relative overflow-hidden border-y border-gold-400/15 bg-forest-950 py-6">
       <div className="marquee-track">
         <Group />
         <Group />

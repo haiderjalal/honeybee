@@ -52,7 +52,7 @@ export function Hero() {
       <Container className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
         <div className="relative z-10 flex flex-col items-start gap-7">
           <p
-            className="hero-reveal flex items-center gap-3 rounded-full border border-gold-400/30 bg-forest-900/60 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-gold-300 uppercase backdrop-blur"
+            className="hero-reveal flex items-center gap-3 rounded-full border border-gold-400/30 bg-forest-950 px-4 py-1.5 text-xs font-semibold tracking-[0.25em] text-gold-300 uppercase backdrop-blur"
             style={reveal(0)}
           >
             <span aria-hidden="true" className="size-1.5 rounded-full bg-gold-400 shadow-[0_0_12px_#f6bd3c]" />
@@ -61,14 +61,14 @@ export function Hero() {
 
           <h1
             id="hero-title"
-            className="hero-reveal font-display text-5xl leading-[0.95] font-medium tracking-tight text-balance text-cream-50 sm:text-7xl xl:text-8xl"
+            className="hero-reveal font-display text-5xl leading-[0.95] font-medium tracking-tight text-balance text-forest-950 sm:text-7xl xl:text-8xl"
             style={reveal(1)}
           >
             <RevealWords text="Liquid gold," />{" "}
-            <RevealWords text="straight from the hive." className="text-gold italic" startAt={2} />
+            <RevealWords text="straight from the hive." className="text-amber-800 italic" startAt={2} />
           </h1>
 
-          <p className="hero-reveal max-w-xl text-lg text-pretty text-cream-300 sm:text-xl" style={reveal(2)}>
+          <p className="hero-reveal max-w-xl text-lg text-pretty text-forest-900/85 sm:text-xl" style={reveal(2)}>
             Sidr, Acacia and Wildflower honey — poured into 500 g, 1 kg and 2 kg jars and delivered to your door.
             Harvest a comb, drop jars in your hive and we&apos;ll do the rest.
           </p>
@@ -83,7 +83,7 @@ export function Hero() {
           </div>
 
           <dl
-            className="hero-reveal mt-4 grid grid-cols-3 gap-6 border-t border-cream-50/10 pt-6 sm:gap-10"
+            className="hero-reveal mt-4 grid grid-cols-3 gap-6 border-t border-forest-950/15 pt-6 sm:gap-10"
             style={reveal(4)}
           >
             {[
@@ -92,8 +92,8 @@ export function Hero() {
               ["100%", "Raw honey"],
             ].map(([value, label]) => (
               <div key={label}>
-                <dt className="text-xs tracking-wide text-cream-500 uppercase">{label}</dt>
-                <dd className="font-display text-3xl text-gold-300 sm:text-4xl">{value}</dd>
+                <dt className="text-xs tracking-wide text-forest-800/75 uppercase">{label}</dt>
+                <dd className="font-display text-3xl text-amber-800 sm:text-4xl">{value}</dd>
               </div>
             ))}
           </dl>
@@ -103,7 +103,10 @@ export function Hero() {
           className="hero-reveal relative mx-auto aspect-square w-full max-w-[34rem]"
           style={{ ...reveal(2), ...honeyStyle(signature.palette) }}
         >
-          <div className="glow-pulse absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgb(246_189_60/0.45),transparent_65%)] blur-2xl" />
+          <div
+            className="absolute inset-[8%] rounded-full bg-forest-950 shadow-[0_40px_80px_-30px_rgb(6_19_14/0.7)]"
+            aria-hidden="true"
+          />
           <Honeycomb className="parallax-slow absolute top-[2%] left-[0%] w-[46%] -rotate-12 opacity-90" dripping />
           <Honeycomb className="parallax-fast absolute right-[2%] bottom-[8%] w-[30%] rotate-12 opacity-70" />
           <div className="float-bob absolute inset-x-[22%] top-[14%] bottom-[4%]">

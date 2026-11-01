@@ -10,6 +10,15 @@ export function getVarietyBySlug(slug: string): HoneyVariety | null {
   return HONEY_VARIETIES.find((variety) => variety.slug === slug) ?? null;
 }
 
+/** Short URL segment for a variety's discover page, e.g. "sidr-honey" becomes "sidr". */
+export function getDiscoverSlug(variety: HoneyVariety): string {
+  return variety.slug.replace(/-honey$/, "");
+}
+
+export function getVarietyByDiscoverSlug(discoverSlug: string): HoneyVariety | null {
+  return HONEY_VARIETIES.find((variety) => getDiscoverSlug(variety) === discoverSlug) ?? null;
+}
+
 export function getJarSizes(): readonly JarSize[] {
   return JAR_SIZES;
 }

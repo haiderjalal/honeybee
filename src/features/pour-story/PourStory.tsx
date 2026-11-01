@@ -81,12 +81,12 @@ export function PourStory({ varieties, sizes }: PourStoryProps) {
       <div className={cn("flex flex-col justify-center overflow-hidden", !reduceMotion && "sticky top-0 h-svh pt-18")}>
         <Container className="grid items-center gap-6 lg:grid-cols-[0.8fr_1.4fr] lg:gap-10">
           <div className="flex flex-col gap-5">
-            <p className="text-xs font-semibold tracking-[0.3em] text-gold-400 uppercase">The pour</p>
+            <p className="text-xs font-semibold tracking-[0.3em] text-forest-800 uppercase">The pour</p>
             <h2
               id="pour-title"
-              className="font-display text-4xl leading-[1.02] font-medium text-cream-50 sm:text-5xl lg:text-6xl"
+              className="font-display text-4xl leading-[1.02] font-medium text-forest-950 sm:text-5xl lg:text-6xl"
             >
-              Poured fresh, <span className="text-gold italic">jar by jar.</span>
+              Poured fresh, <span className="text-amber-800 italic">jar by jar.</span>
             </h2>
             <VarietySwitcher varieties={varieties} value={varietySlug} onChange={setVarietySlug} />
 
@@ -99,11 +99,11 @@ export function PourStory({ varieties, sizes }: PourStoryProps) {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <p className="font-display text-5xl text-gold-300 sm:text-6xl">{activeSize.label}</p>
-                  <p className="mt-1 text-xl text-cream-50">
+                  <p className="font-display text-5xl text-amber-800 sm:text-6xl">{activeSize.label}</p>
+                  <p className="mt-1 text-xl text-forest-950">
                     {copy.heading} · <span className="tabular-nums">{formatPkr(variety.prices[activeSize.id])}</span>
                   </p>
-                  <p className="mt-2 max-w-sm text-cream-300">{copy.body}</p>
+                  <p className="mt-2 max-w-sm text-forest-900/85">{copy.body}</p>
                 </m.div>
               </AnimatePresence>
             </div>
@@ -116,7 +116,7 @@ export function PourStory({ varieties, sizes }: PourStoryProps) {
                     aria-current={index === stage ? "step" : undefined}
                     className={cn(
                       "h-1.5 rounded-full transition-all duration-500",
-                      index === stage ? "w-12 bg-gold-400" : index < stage ? "w-6 bg-gold-600" : "w-6 bg-cream-50/15",
+                      index === stage ? "w-12 bg-gold-400" : index < stage ? "w-6 bg-gold-600" : "w-6 bg-forest-950/20",
                     )}
                   >
                     <span className="visually-hidden">{size.label}</span>
@@ -129,7 +129,7 @@ export function PourStory({ varieties, sizes }: PourStoryProps) {
           <svg
             // Cropped to the jars' extent so the scene stays large on narrow screens.
             viewBox={`100 0 ${STAGE.width - 200} ${STAGE.height}`}
-            className="max-h-[58svh] w-full lg:max-h-[78svh]"
+            className="max-h-[58svh] w-full rounded-[2rem] border border-forest-950/10 bg-cream-50/85 p-4 lg:max-h-[78svh]"
             role="img"
             aria-label={`${variety.name} pouring into ${sizes.map((s) => s.label).join(", ")} jars`}
           >

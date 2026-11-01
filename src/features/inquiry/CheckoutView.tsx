@@ -30,7 +30,7 @@ export function CheckoutView() {
 
   if (lines.length === 0) {
     return (
-      <div className="mx-auto flex max-w-lg flex-col items-center gap-5 rounded-3xl border border-cream-50/10 bg-forest-900/60 px-8 py-16 text-center">
+      <div className="mx-auto flex max-w-lg flex-col items-center gap-5 rounded-3xl border border-cream-50/10 bg-forest-950 px-8 py-16 text-center">
         <div className="h-32 w-24">
           <HoneyJar fill={0} lid={0} className="size-full" />
         </div>
@@ -47,7 +47,7 @@ export function CheckoutView() {
     <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
       <section
         aria-labelledby="details-title"
-        className="rounded-3xl border border-cream-50/10 bg-forest-900/60 p-6 sm:p-10"
+        className="rounded-3xl border border-cream-50/10 bg-forest-950 p-6 sm:p-10"
       >
         <h2 id="details-title" className="mb-6 font-display text-3xl text-cream-50">
           Your details

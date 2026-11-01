@@ -10,11 +10,12 @@ const BASE =
   "relative inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-wide transition-[background-color,color,box-shadow,translate] duration-300 ease-(--ease-honey) disabled:pointer-events-none disabled:opacity-50 active:translate-y-px";
 
 const VARIANTS: Record<Variant, string> = {
+  // Forest fill with gold text reads clearly on the golden page and on the dark cards alike.
   primary:
-    "sheen bg-linear-to-b from-gold-300 to-gold-500 text-forest-950 shadow-[0_10px_30px_-10px_rgb(224_154_18/0.8),inset_0_1px_0_rgb(255_255_255/0.5)] hover:from-gold-200 hover:to-gold-400 hover:shadow-[0_14px_40px_-10px_rgb(246_189_60/0.9),inset_0_1px_0_rgb(255_255_255/0.6)]",
+    "sheen bg-forest-950 text-gold-200 shadow-[0_12px_30px_-12px_rgb(6_19_14/0.7),inset_0_1px_0_rgb(255_255_255/0.08)] hover:bg-forest-800 hover:text-gold-100 hover:shadow-[0_16px_36px_-12px_rgb(6_19_14/0.8),inset_0_1px_0_rgb(255_255_255/0.12)]",
   secondary:
-    "border border-gold-400/40 bg-forest-800/60 text-cream-50 backdrop-blur hover:border-gold-300 hover:bg-forest-700/70",
-  ghost: "text-cream-100 hover:bg-cream-50/5 hover:text-gold-300",
+    "border border-forest-950/25 bg-cream-50/80 text-forest-950 backdrop-blur hover:border-forest-950/50 hover:bg-cream-50",
+  ghost: "text-forest-950 hover:bg-forest-950/5 hover:text-forest-800",
 };
 
 const SIZES: Record<Size, string> = {

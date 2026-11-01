@@ -31,7 +31,7 @@ export function AddToHivePanel({ variety, sizes }: AddToHivePanelProps) {
   return (
     <div className="space-y-5">
       <fieldset>
-        <legend className="mb-3 text-sm font-medium text-cream-300">Choose a jar</legend>
+        <legend className="mb-3 text-sm font-medium text-forest-900/85">Choose a jar</legend>
         <div className="grid grid-cols-3 gap-3">
           {sizes.map((size) => {
             const checked = size.id === sizeId;
@@ -40,7 +40,7 @@ export function AddToHivePanel({ variety, sizes }: AddToHivePanelProps) {
                 key={size.id}
                 className={cn(
                   "flex cursor-pointer flex-col items-center rounded-2xl border px-3 py-4 text-center transition-colors has-focus-visible:outline-2 has-focus-visible:outline-gold-300",
-                  checked ? "border-gold-400 bg-gold-400/10" : "border-cream-50/15 hover:border-gold-400/50",
+                  checked ? "border-forest-950 bg-forest-950/10" : "border-forest-950/25 hover:border-forest-950/60",
                 )}
               >
                 <input
@@ -51,8 +51,8 @@ export function AddToHivePanel({ variety, sizes }: AddToHivePanelProps) {
                   onChange={() => setSizeId(size.id)}
                   className="visually-hidden"
                 />
-                <span className="font-display text-xl text-cream-50">{size.label}</span>
-                <span className="text-sm text-cream-300 tabular-nums">{formatPkr(variety.prices[size.id])}</span>
+                <span className="font-display text-xl text-forest-950">{size.label}</span>
+                <span className="text-sm text-forest-900/85 tabular-nums">{formatPkr(variety.prices[size.id])}</span>
               </label>
             );
           })}

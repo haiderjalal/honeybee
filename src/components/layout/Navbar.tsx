@@ -9,7 +9,7 @@ import { Logo } from "./Logo";
 
 export function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-30 border-b border-cream-50/5 bg-forest-950/70 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-30 border-b border-cream-50/5 bg-forest-950/90 backdrop-blur-xl">
       <Container className="flex h-18 items-center justify-between gap-6">
         <Link href={ROUTES.home} aria-label="HonyB home" className="rounded-lg">
           <Logo />

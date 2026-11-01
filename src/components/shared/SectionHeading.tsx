@@ -20,18 +20,18 @@ export function SectionHeading({ id, eyebrow, title, description, align = "cente
         className,
       )}
     >
-      <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-sage-300 uppercase">
-        <span aria-hidden="true" className="h-px w-8 bg-gold-400/60" />
+      <p className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-forest-800 uppercase">
+        <span aria-hidden="true" className="h-px w-8 bg-forest-800/40" />
         {eyebrow}
-        <span aria-hidden="true" className="h-px w-8 bg-gold-400/60" />
+        <span aria-hidden="true" className="h-px w-8 bg-forest-800/40" />
       </p>
       <h2
         id={id}
-        className="title-reveal font-display text-4xl leading-[1.05] font-medium text-balance text-cream-50 sm:text-5xl lg:text-6xl"
+        className="title-reveal font-display text-4xl leading-[1.05] font-medium text-balance text-forest-950 sm:text-5xl lg:text-6xl"
       >
         {title}
       </h2>
-      {description ? <p className="text-lg text-pretty text-cream-300">{description}</p> : null}
+      {description ? <p className="text-lg text-pretty text-forest-900/85">{description}</p> : null}
     </div>
   );
 }
