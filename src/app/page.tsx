@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PauseOffscreen } from "@/components/shared/PauseOffscreen";
+import { SectionDivider } from "@/components/shared/SectionDivider";
 import { VarietyShowcase } from "@/features/catalog/VarietyShowcase";
 import { Hero } from "@/features/hero/Hero";
 import { Marquee } from "@/features/marketing/Marquee";
@@ -27,12 +28,18 @@ export default function HomePage() {
       <SwarmIntro />
       <Hero />
       <Marquee />
+      <SectionDivider />
       <PourStory varieties={varieties} sizes={getJarSizes()} />
+      <SectionDivider />
       <HoneyLabSection />
+      <SectionDivider />
       <VarietyShowcase />
+      <SectionDivider />
       <Promises />
       <Process />
+      <SectionDivider />
       <Faq />
+      <SectionDivider />
       <CtaBand />
       <PauseOffscreen />
       <JsonLd data={[itemListJsonLd(varieties), faqJsonLd()]} />
