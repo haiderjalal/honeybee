@@ -60,21 +60,21 @@ export default async function VarietyPage({ params }: PageProps) {
   return (
     <article style={honeyStyle(variety.palette)}>
       <Container className="pt-28 pb-16 sm:pt-32">
-        <nav aria-label="Breadcrumb" className="mb-10 text-sm text-forest-800/75">
+        <nav aria-label="Breadcrumb" className="mb-10 text-sm text-cream-500">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href={ROUTES.home} className="hover:text-amber-800">
+              <Link href={ROUTES.home} className="hover:text-gold-300">
                 Home
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link href="/#varieties" className="hover:text-amber-800">
+              <Link href="/#varieties" className="hover:text-gold-300">
                 Our honey
               </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li aria-current="page" className="text-forest-900/85">
+            <li aria-current="page" className="text-cream-300">
               {variety.name}
             </li>
           </ol>
@@ -105,23 +105,19 @@ export default async function VarietyPage({ params }: PageProps) {
           </div>
 
           <div className="flex flex-col gap-6">
-            <p className="text-xs font-semibold tracking-[0.3em] text-forest-800 uppercase">
-              {variety.localName} honey
-            </p>
-            <h1 className="font-display text-5xl leading-none font-medium text-forest-950 sm:text-7xl">
-              {variety.name}
-            </h1>
-            <p className="text-xl text-amber-800">{variety.tagline}</p>
-            <p className="text-lg text-forest-900/85">{variety.description}</p>
+            <p className="text-xs font-semibold tracking-[0.3em] text-gold-400 uppercase">{variety.localName} honey</p>
+            <h1 className="font-display text-5xl leading-none font-medium text-cream-50 sm:text-7xl">{variety.name}</h1>
+            <p className="text-xl text-gold-300">{variety.tagline}</p>
+            <p className="text-lg text-cream-300">{variety.description}</p>
             <AddToHivePanel variety={variety} sizes={sizes} />
           </div>
         </div>
 
         <section aria-labelledby="facts-title" className="mt-24 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <h2 id="facts-title" className="font-display text-4xl text-forest-950">
+          <h2 id="facts-title" className="font-display text-4xl text-cream-50">
             About {variety.name.toLowerCase()}
           </h2>
-          <dl className="divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 bg-forest-950 px-6 sm:px-8">
+          <dl className="divide-y divide-cream-50/10 rounded-3xl border border-cream-50/10 bg-forest-900/60 px-6 sm:px-8">
             {facts.map(([term, detail]) => (
               <div key={term} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr]">
                 <dt className="text-sm text-cream-500">{term}</dt>
@@ -138,7 +134,7 @@ export default async function VarietyPage({ params }: PageProps) {
         </section>
 
         <section aria-labelledby="others-title" className="mt-24">
-          <h2 id="others-title" className="font-display text-3xl text-forest-950">
+          <h2 id="others-title" className="font-display text-3xl text-cream-50">
             Explore other honey
           </h2>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -146,7 +142,7 @@ export default async function VarietyPage({ params }: PageProps) {
               <li key={other.slug}>
                 <Link
                   href={ROUTES.variety(other.slug)}
-                  className="flex items-center gap-5 rounded-3xl border border-cream-50/10 bg-forest-950 p-5 transition-colors hover:border-gold-400/40"
+                  className="flex items-center gap-5 rounded-3xl border border-cream-50/10 bg-forest-900/60 p-5 transition-colors hover:border-gold-400/40"
                   style={honeyStyle(other.palette)}
                 >
                   <span className="h-20 w-14 shrink-0">

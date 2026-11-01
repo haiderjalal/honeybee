@@ -16,9 +16,9 @@ export default function CheckoutPage() {
   return (
     <Container className="pt-32 pb-16">
       <header className="mb-10 max-w-2xl">
-        <p className="text-xs font-semibold tracking-[0.3em] text-forest-800 uppercase">Almost there</p>
-        <h1 className="mt-3 font-display text-5xl text-forest-950 sm:text-6xl">Send your order request</h1>
-        <p className="mt-4 text-lg text-forest-900/85">
+        <p className="text-xs font-semibold tracking-[0.3em] text-gold-400 uppercase">Almost there</p>
+        <h1 className="mt-3 font-display text-5xl text-cream-50 sm:text-6xl">Send your order request</h1>
+        <p className="mt-4 text-lg text-cream-300">
           Tell us where to deliver. We&apos;ll call you to confirm everything before your honey ships.
         </p>
       </header>

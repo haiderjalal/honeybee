@@ -156,11 +156,11 @@ export function HoneyLab({ varieties, sizes }: HoneyLabProps) {
         }}
       />
 
-      <p className="mt-10 min-h-7 text-center text-forest-900/85" aria-live="polite" id={`${SECTION_IDS.lab}-status`}>
+      <p className="mt-10 min-h-7 text-center text-cream-300" aria-live="polite" id={`${SECTION_IDS.lab}-status`}>
         {STATUS[phase](statusName)}
       </p>
 
-      <div className="relative mt-6 rounded-[2rem] border border-gold-400/15 bg-linear-to-b from-forest-900 to-forest-950 px-4 pt-10 pb-6 sm:px-10">
+      <div className="relative mt-6 rounded-[2rem] border border-gold-400/15 bg-linear-to-b from-forest-800/70 to-forest-900/80 px-4 pt-10 pb-6 sm:px-10">
         <ul className="grid grid-cols-3 items-end gap-3 sm:gap-8" aria-label="Jar sizes">
           {sizes.map((size) => (
             <DraggableJar

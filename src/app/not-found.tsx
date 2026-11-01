@@ -15,9 +15,9 @@ export default function NotFound() {
       <div className="float-bob w-24" aria-hidden="true">
         <Bee className="w-full" />
       </div>
-      <p className="font-display text-8xl text-amber-800">404</p>
-      <h1 className="font-display text-4xl text-forest-950">This bee flew off course</h1>
-      <p className="max-w-md text-forest-900/85">
+      <p className="text-gold font-display text-8xl">404</p>
+      <h1 className="font-display text-4xl text-cream-50">This bee flew off course</h1>
+      <p className="max-w-md text-cream-300">
         The page you&apos;re looking for doesn&apos;t exist. Let&apos;s get you back to the hive.
       </p>
       <ButtonLink href="/">Back to the hive</ButtonLink>

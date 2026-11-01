@@ -86,8 +86,8 @@ function PromiseCard({ promise, index }: { promise: (typeof PROMISES)[number]; i
         className={cn(
           "sheen group relative flex h-full min-h-72 flex-col justify-between overflow-hidden rounded-[2rem] border p-7 transition-[border-color,translate] duration-500 hover:-translate-y-1 sm:p-9",
           isGold
-            ? "border-gold-400/20 bg-linear-to-br from-forest-900 to-forest-950 hover:border-gold-400/50"
-            : "border-sage-400/20 bg-linear-to-br from-forest-900 to-forest-950 hover:border-sage-300/50",
+            ? "border-gold-400/20 bg-linear-to-br from-forest-800/80 to-forest-900/90 hover:border-gold-400/50"
+            : "border-sage-400/20 bg-linear-to-br from-forest-800/70 to-forest-950/90 hover:border-sage-300/50",
         )}
       >
         <span
@@ -131,7 +131,7 @@ export function Promises() {
           eyebrow="The HonyB promise"
           title={
             <>
-              Honey you can <span className="text-amber-800 italic">trust.</span>
+              Honey you can <span className="text-gold italic">trust.</span>
             </>
           }
           description="Four promises we keep on every jar, from the hive to your door."

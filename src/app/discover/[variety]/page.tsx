@@ -50,7 +50,7 @@ export default async function DiscoverPage({ params }: PageProps) {
   return (
     <article className="pt-28 pb-8" style={honeyStyle(variety.palette)}>
       <Container>
-        <nav aria-label="Breadcrumb" className="text-sm text-forest-800">
+        <nav aria-label="Breadcrumb" className="text-sm text-cream-500">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
               <Link href={ROUTES.home} className="hover:underline">
@@ -64,7 +64,7 @@ export default async function DiscoverPage({ params }: PageProps) {
               </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li aria-current="page" className="font-medium text-forest-950">
+            <li aria-current="page" className="font-medium text-cream-50">
               {variety.name}
             </li>
           </ol>
@@ -76,7 +76,7 @@ export default async function DiscoverPage({ params }: PageProps) {
 
       <section aria-labelledby="more-discover" className="pb-24">
         <Container>
-          <h2 id="more-discover" className="font-display text-4xl text-forest-950">
+          <h2 id="more-discover" className="font-display text-4xl text-cream-50">
             Discover more honey
           </h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -84,18 +84,18 @@ export default async function DiscoverPage({ params }: PageProps) {
               <li key={other.slug}>
                 <Link
                   href={ROUTES.discover(getDiscoverSlug(other))}
-                  className="group flex items-center gap-5 rounded-[2rem] border border-forest-950/10 bg-cream-50/80 p-6 transition-transform duration-500 hover:-translate-y-1"
+                  className="group flex items-center gap-5 rounded-[2rem] border border-cream-50/10 bg-forest-900/60 p-6 transition-transform duration-500 hover:-translate-y-1"
                 >
                   <span
                     aria-hidden="true"
-                    className="size-16 shrink-0 rounded-full ring-4 ring-forest-950/10"
+                    className="size-16 shrink-0 rounded-full ring-4 ring-cream-50/10"
                     style={{
                       background: `radial-gradient(circle at 35% 30%, ${other.palette.light}, ${other.palette.base} 60%, ${other.palette.deep})`,
                     }}
                   />
                   <span>
-                    <span className="block font-display text-3xl text-forest-950">{other.name}</span>
-                    <span className="text-forest-900/80">
+                    <span className="block font-display text-3xl text-cream-50">{other.name}</span>
+                    <span className="text-cream-300">
                       {other.tagline} From {formatPkr(getStartingPrice(other))}.
                     </span>
                   </span>

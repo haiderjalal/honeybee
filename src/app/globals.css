@@ -44,17 +44,20 @@
 }
 
 html {
-  background: #f9cd4f;
+  background: var(--color-forest-950);
   scroll-padding-top: 5rem;
 }
 
-/* Warm honey gradient base; the honeycomb cells are drawn on body::before. */
-/* Own stacking context so the ambient bee layer (z -1) paints above the body background but below content. */
+/* Forest base lit by a sage glow (top right) and a warm honey glow (top left). */
+/* Own stacking context so the ambient bee layer (z -1) paints above the body gradient but below content. */
 body {
   position: relative;
   z-index: 0;
-  background: linear-gradient(165deg, #ffe89a 0%, #f9cd4f 45%, #eeab25 100%);
-  color: var(--color-forest-950);
+  background:
+    radial-gradient(70rem 46rem at 92% -12%, rgb(95 156 124 / 0.22), transparent 62%),
+    radial-gradient(56rem 36rem at -8% 18%, rgb(224 154 18 / 0.12), transparent 60%),
+    radial-gradient(60rem 40rem at 50% 115%, rgb(43 90 70 / 0.45), transparent 65%), var(--color-forest-950);
+  color: var(--color-cream-100);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -521,14 +524,14 @@ html:not([data-intro="playing"]) .hero-word {
   }
 }
 
-/* ---------- Golden honeycomb background: round honeycomb cells across the whole page ---------- */
-/* The cells sit behind the content and drift one tile to the side, looping seamlessly. */
+/* ---------- Honeycomb pattern: faint round cells over the dark forest background ---------- */
+/* The cells drift one tile to the side and loop seamlessly; the background colour itself is unchanged. */
 body::before {
   content: "";
   position: fixed;
   inset: -96px;
   z-index: -1;
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='83' viewBox='0 0 48 83'><g fill='rgb(255,255,255)' fill-opacity='.22' stroke='rgb(164,101,10)' stroke-opacity='.45' stroke-width='1.5'><circle cx='0' cy='0' r='19'/><circle cx='48' cy='0' r='19'/><circle cx='0' cy='83' r='19'/><circle cx='48' cy='83' r='19'/><circle cx='24' cy='41.5' r='19'/></g></svg>");
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='83' viewBox='0 0 48 83'><g fill='none' stroke='rgb(246,189,60)' stroke-opacity='.5' stroke-width='1.5'><circle cx='0' cy='0' r='19'/><circle cx='48' cy='0' r='19'/><circle cx='0' cy='83' r='19'/><circle cx='48' cy='83' r='19'/><circle cx='24' cy='41.5' r='19'/></g></svg>");
   background-size: 48px 83px;
   opacity: 0.2;
   pointer-events: none;
