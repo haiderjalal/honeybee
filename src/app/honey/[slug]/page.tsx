@@ -7,6 +7,7 @@ import { Honeycomb } from "@/components/art/Honeycomb";
 import { HoneyJar } from "@/components/art/HoneyJar";
 import { Container } from "@/components/layout/Container";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { SectionDivider } from "@/components/shared/SectionDivider";
 import { ROUTES } from "@/constants/routes";
 import { AddToHivePanel } from "@/features/catalog/AddToHivePanel";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonLd";
@@ -113,6 +114,7 @@ export default async function VarietyPage({ params }: PageProps) {
           </div>
         </div>
 
+        <SectionDivider />
         <section aria-labelledby="facts-title" className="mt-24 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <h2 id="facts-title" className="font-display text-4xl text-cream-50">
             About {variety.name.toLowerCase()}
@@ -133,6 +135,7 @@ export default async function VarietyPage({ params }: PageProps) {
           </dl>
         </section>
 
+        <SectionDivider />
         <section aria-labelledby="others-title" className="mt-24">
           <h2 id="others-title" className="font-display text-3xl text-cream-50">
             Explore other honey

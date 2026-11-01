@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Container } from "@/components/layout/Container";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { SectionDivider } from "@/components/shared/SectionDivider";
 import { ROUTES } from "@/constants/routes";
 import { DiscoverDetails } from "@/features/discover/DiscoverDetails";
 import { DiscoverHero } from "@/features/discover/DiscoverHero";
@@ -72,8 +73,10 @@ export default async function DiscoverPage({ params }: PageProps) {
       </Container>
 
       <DiscoverHero variety={variety} />
+      <SectionDivider />
       <DiscoverDetails variety={variety} />
 
+      <SectionDivider />
       <section aria-labelledby="more-discover" className="pb-24">
         <Container>
           <h2 id="more-discover" className="font-display text-4xl text-cream-50">

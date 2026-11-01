@@ -12,7 +12,7 @@ export function Process() {
     <section
       id={SECTION_IDS.process}
       aria-labelledby="process-title"
-      className="defer-render py-24 sm:py-32"
+      className="defer-render border-y border-gold-400/25 bg-forest-900/50 py-24 sm:py-32"
       style={{ "--defer-height": "800px" } as CSSProperties}
     >
       <Container>
