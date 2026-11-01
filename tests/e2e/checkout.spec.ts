@@ -52,6 +52,14 @@ test.describe("inquiry API", () => {
     expect(body.errors).toHaveProperty("items");
   });
 
+  test("rejects oversized bodies before parsing them", async ({ request }) => {
+    const response = await request.post("/api/inquiries", {
+      data: { name: "x".repeat(20_000) },
+      headers: uniqueClientIp(),
+    });
+    expect(response.status()).toBe(413);
+  });
+
   test("rejects malformed JSON", async ({ request }) => {
     const response = await request.post("/api/inquiries", {
       data: Buffer.from("{oops"),

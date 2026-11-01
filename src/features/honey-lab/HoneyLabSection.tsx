@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { DragMotionProvider } from "@/components/layout/DragMotionProvider";
 import { SECTION_IDS } from "@/constants/routes";
 import { getJarSizes, getVarieties } from "@/services/catalog.service";
 
@@ -20,7 +21,9 @@ export function HoneyLabSection() {
           description="Choose a honeycomb and our bee will fill the jars. Then drag the jar you want into your hive in the corner — or tap Add to hive."
         />
         <div className="mt-16">
-          <HoneyLab varieties={getVarieties()} sizes={getJarSizes()} />
+          <DragMotionProvider>
+            <HoneyLab varieties={getVarieties()} sizes={getJarSizes()} />
+          </DragMotionProvider>
         </div>
       </Container>
     </section>

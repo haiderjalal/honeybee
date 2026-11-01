@@ -64,7 +64,7 @@ export function Footer() {
           </ul>
         </nav>
       </Container>
-      <Container className="flex flex-col gap-2 border-t border-cream-50/5 py-6 text-sm text-cream-500 sm:flex-row sm:justify-between">
+      <Container className="flex flex-col gap-2 border-t border-cream-50/5 pt-6 pb-28 text-sm text-cream-500 sm:flex-row sm:justify-between sm:pb-6">
         <p>
           © {SITE.legalName}. Delivered across {SITE.country}.
         </p>

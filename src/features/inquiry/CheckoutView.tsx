@@ -1,7 +1,7 @@
 "use client";
 
 import { m, useReducedMotion } from "motion/react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { HoneyJar } from "@/components/art/HoneyJar";
 import { ButtonLink } from "@/components/ui/Button";
@@ -89,10 +89,17 @@ export function CheckoutView() {
 
 function SuccessState({ reference }: { reference: string }) {
   const reduceMotion = useReducedMotion();
+  const cardRef = useRef<HTMLDivElement>(null);
   const whatsapp = whatsappUrl(`Hi HonyB, I just sent order request ${reference}.`);
+
+  // The form is long, so bring the confirmation into view rather than leaving the visitor at the footer.
+  useEffect(() => {
+    cardRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }, [reduceMotion]);
 
   return (
     <m.div
+      ref={cardRef}
       initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

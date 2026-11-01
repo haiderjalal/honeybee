@@ -15,9 +15,38 @@ type InquiryResponse = NextResponse<ApiResponse<InquiryReceipt>>;
 const fail = (status: number, message: string, errors?: FieldErrors, headers?: HeadersInit): InquiryResponse =>
   NextResponse.json({ success: false, message, errors }, { status, headers });
 
+/** Prefers the platform-set real IP; the first X-Forwarded-For entry can be supplied by the visitor. */
 function clientIp(request: Request): string {
+  const realIp = request.headers.get("x-real-ip")?.trim();
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || request.headers.get("x-real-ip") || "unknown";
+  return realIp || forwarded || "unknown";
+}
+
+/**
+ * Reads the body as text, stopping as soon as it exceeds `maxBytes`, so an oversized request
+ * is never buffered in full. Returns null when the limit is exceeded.
+ */
+async function readBodyWithLimit(request: Request, maxBytes: number): Promise<string | null> {
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (declared > maxBytes) return null;
+  if (!request.body) return "";
+
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  let received = 0;
+  let text = "";
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    received += value.byteLength;
+    if (received > maxBytes) {
+      await reader.cancel();
+      return null;
+    }
+    text += decoder.decode(value, { stream: true });
+  }
+  return text + decoder.decode();
 }
 
 /** POST /api/inquiries — validates an order request and hands it to the InquiryService. */
@@ -29,8 +58,8 @@ export async function POST(request: Request): Promise<InquiryResponse> {
     });
   }
 
-  const raw = await request.text();
-  if (raw.length > MAX_BODY_BYTES) return fail(413, "Your request is too large.");
+  const raw = await readBodyWithLimit(request, MAX_BODY_BYTES);
+  if (raw === null) return fail(413, "Your request is too large.");
 
   let body: unknown;
   try {

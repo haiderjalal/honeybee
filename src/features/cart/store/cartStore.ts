@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
 
 import { MAX_CART_LINES, MAX_QUANTITY_PER_LINE } from "@/constants/catalog";
 import { getPricedVariant } from "@/services/catalog.service";
@@ -27,6 +27,34 @@ const isSameLine = (item: CartItem, varietySlug: string, sizeId: SizeId): boolea
   item.varietySlug === varietySlug && item.sizeId === sizeId;
 
 const clampQuantity = (quantity: number): number => Math.min(MAX_QUANTITY_PER_LINE, Math.max(1, Math.floor(quantity)));
+
+/**
+ * localStorage can throw (blocked storage, some private modes, full quota). The cart then keeps
+ * working in memory for the session instead of breaking the page.
+ */
+const safeLocalStorage: StateStorage = {
+  getItem: (name) => {
+    try {
+      return localStorage.getItem(name);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (name, value) => {
+    try {
+      localStorage.setItem(name, value);
+    } catch {
+      // Storage unavailable: the cart stays in memory for this visit.
+    }
+  },
+  removeItem: (name) => {
+    try {
+      localStorage.removeItem(name);
+    } catch {
+      // Nothing to remove when storage is unavailable.
+    }
+  },
+};
 
 export const useCartStore = create<CartState>()(
   persist(
@@ -70,7 +98,7 @@ export const useCartStore = create<CartState>()(
     {
       name: "honeybee-cart",
       version: 1,
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => safeLocalStorage),
       partialize: ({ items }) => ({ items }),
       // Hydrate manually after mount so server and first client render match.
       skipHydration: true,

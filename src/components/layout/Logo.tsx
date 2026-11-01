@@ -10,19 +10,28 @@ export function LogoMark({ className }: { className?: string }) {
       alt=""
       width={512}
       height={512}
+      sizes="64px"
       className={cn("size-9 object-contain", className)}
     />
   );
 }
 
+interface LogoProps {
+  className?: string;
+  /** Set for the logo above the fold (the navbar), so it loads with the first paint. */
+  priority?: boolean;
+}
+
 /** Full HonyB wordmark, with the drop as the O. */
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, priority = false }: LogoProps) {
   return (
     <Image
       src="/brand/honyb-wordmark.png"
       alt="HonyB"
       width={1200}
       height={396}
+      sizes="128px"
+      priority={priority}
       className={cn("h-8 w-auto", className)}
     />
   );

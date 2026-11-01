@@ -2,7 +2,7 @@
 
 import { m, type PanInfo } from "motion/react";
 import { Check, Plus } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { HoneyJar } from "@/components/art/HoneyJar";
 import { Button } from "@/components/ui/Button";
@@ -32,11 +32,16 @@ export function DraggableJar({ size, variety, ready, registerJar }: DraggableJar
   const setOverDropZone = useCartUiStore((state) => state.setOverDropZone);
   const [justAdded, setJustAdded] = useState(false);
 
+  // Clears the "added" confirmation after a moment; the timer is cancelled on unmount and on re-add.
+  const resetTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
+
   const add = () => {
     if (!variety) return;
     if (addToCart(variety.slug, size.id) === "added") {
       setJustAdded(true);
-      window.setTimeout(() => setJustAdded(false), 1400);
+      window.clearTimeout(resetTimer.current);
+      resetTimer.current = window.setTimeout(() => setJustAdded(false), 1400);
     }
   };
 

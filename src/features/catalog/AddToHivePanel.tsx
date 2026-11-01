@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { useAddToCart } from "@/features/cart/useAddToCart";
@@ -22,10 +22,15 @@ export function AddToHivePanel({ variety, sizes }: AddToHivePanelProps) {
   const addToCart = useAddToCart();
   const openDrawer = useCartUiStore((state) => state.openDrawer);
 
+  // Clears the "added" confirmation after a moment; the timer is cancelled on unmount and on re-add.
+  const resetTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
+
   const add = () => {
     if (addToCart(variety.slug, sizeId) !== "added") return;
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 1600);
+    window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => setAdded(false), 1600);
   };
 
   return (
