@@ -1,7 +1,7 @@
 import { HONEY_VARIETIES } from "@/constants/catalog";
 import { OG_SIZE, renderOgImage } from "@/lib/seo/ogImage";
 
-export const alt = "Honeybee — raw Sidr, Acacia and Wildflower honey delivered across Pakistan";
+export const alt = "HonyB — raw Sidr, Acacia and Wildflower honey delivered across Pakistan";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 

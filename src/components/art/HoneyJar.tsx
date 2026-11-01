@@ -122,7 +122,7 @@ export function HoneyJar({ className, fill, lid, label, x, y, width, height, tit
             fill="#7a4a06"
             fontFamily="var(--font-sans)"
           >
-            HONEYBEE
+            HONYB
           </text>
           <text x="100" y="206" textAnchor="middle" fontSize="19" fill="#2a1a08" fontFamily="var(--font-display)">
             {label.title}

@@ -89,7 +89,7 @@ export function CheckoutView() {
 
 function SuccessState({ reference }: { reference: string }) {
   const reduceMotion = useReducedMotion();
-  const whatsapp = whatsappUrl(`Hi Honeybee, I just sent order request ${reference}.`);
+  const whatsapp = whatsappUrl(`Hi HonyB, I just sent order request ${reference}.`);
 
   return (
     <m.div

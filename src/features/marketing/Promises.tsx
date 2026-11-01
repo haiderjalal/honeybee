@@ -128,7 +128,7 @@ export function Promises() {
       <Container>
         <SectionHeading
           id="promises-title"
-          eyebrow="The Honeybee promise"
+          eyebrow="The HonyB promise"
           title={
             <>
               Honey you can <span className="text-gold italic">trust.</span>

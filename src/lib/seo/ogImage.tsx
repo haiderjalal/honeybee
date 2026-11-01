@@ -55,7 +55,7 @@ export function renderOgImage({ eyebrow, title, subtitle, palette }: OgOptions):
       </div>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 680 }}>
         <div style={{ display: "flex", fontSize: 30, color: "#f6bd3c", letterSpacing: 6, textTransform: "uppercase" }}>
-          Honeybee
+          HonyB
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div

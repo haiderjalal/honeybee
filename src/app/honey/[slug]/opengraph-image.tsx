@@ -2,7 +2,7 @@ import { OG_SIZE, renderOgImage } from "@/lib/seo/ogImage";
 import { getStartingPrice, getVarieties, getVarietyBySlug } from "@/services/catalog.service";
 import { formatPkr } from "@/utils/formatPkr";
 
-export const alt = "Honeybee honey variety";
+export const alt = "HonyB honey variety";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 

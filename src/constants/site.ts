@@ -1,9 +1,9 @@
 export const SITE = {
-  name: "Honeybee",
-  legalName: "Honeybee",
+  name: "HonyB",
+  legalName: "HonyB",
   tagline: "Raw honey, poured to order",
   description:
-    "Honeybee delivers raw Sidr, Acacia and Wildflower honey across Pakistan in 500 g, 1 kg and 2 kg jars. Pick your honey, drop jars in your hive and send an order request — we confirm by phone and deliver to your door.",
+    "HonyB delivers raw Sidr, Acacia and Wildflower honey across Pakistan in 500 g, 1 kg and 2 kg jars. Pick your honey, drop jars in your hive and send an order request — we confirm by phone and deliver to your door.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
   locale: "en_PK",
   country: "Pakistan",

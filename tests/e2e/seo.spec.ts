@@ -14,7 +14,7 @@ test.describe("SEO and GEO", () => {
 
     const llms = await request.get("/llms.txt");
     expect(llms.headers()["content-type"]).toContain("text/plain");
-    expect(await llms.text()).toMatch(/^# Honeybee/);
+    expect(await llms.text()).toMatch(/^# HonyB/);
 
     expect((await request.get("/llms-full.txt")).ok()).toBe(true);
     expect((await request.get("/manifest.webmanifest")).ok()).toBe(true);
@@ -23,7 +23,7 @@ test.describe("SEO and GEO", () => {
   test("home page has one h1, metadata and structured data", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page).toHaveTitle(/Honeybee/);
+    await expect(page).toHaveTitle(/HonyB/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https?:\/\/[^/]+\/?$/);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
     const types = await page.locator('script[type="application/ld+json"]').allTextContents();

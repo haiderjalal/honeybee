@@ -86,7 +86,7 @@ export function ownerInquiryEmail(order: OrderRequest): EmailContent {
 export function customerConfirmationEmail(order: OrderRequest): EmailContent {
   const firstName = order.customer.name.split(" ")[0] ?? order.customer.name;
   return {
-    subject: `We received your Honeybee order request (${order.reference})`,
+    subject: `We received your HonyB order request (${order.reference})`,
     html: layout(
       `Thank you, ${firstName}!`,
       `<p style="font-size:15px;line-height:1.6">We've received your order request <strong>${escapeHtml(order.reference)}</strong>.

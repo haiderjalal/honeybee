@@ -1,6 +1,6 @@
-# Honeybee
+# HonyB
 
-A premium, heavily animated storefront for **Honeybee** raw honey. Customers explore Sidr, Acacia and Wildflower honey in
+A premium, heavily animated storefront for **HonyB** raw honey. Customers explore Sidr, Acacia and Wildflower honey in
 500 g, 1 kg and 2 kg jars (priced in PKR), drag jars into their "hive" (cart) and send an **order request** that is
 emailed to the team through [Resend](https://resend.com). No payment is taken online — orders are confirmed by phone.
 
