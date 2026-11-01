@@ -73,7 +73,7 @@ export function SwarmIntro() {
       <div ref={canvasHostRef} className="absolute inset-0" />
       <div className="intro-wordmark pointer-events-none relative text-center" aria-hidden="true">
         <p className="font-display text-6xl font-medium tracking-tight text-cream-50 drop-shadow-[0_4px_30px_rgb(0_0_0/0.7)] sm:text-8xl">
-          Honeybee
+          HonyB
         </p>
         <p className="mx-auto mt-4 w-fit rounded-full bg-forest-950/75 px-4 py-1.5 text-xs font-semibold tracking-[0.4em] text-gold-200 uppercase sm:text-sm">
           Raw honey · Pakistan

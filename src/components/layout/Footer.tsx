@@ -10,7 +10,7 @@ import { Container } from "./Container";
 import { Logo } from "./Logo";
 
 export function Footer() {
-  const whatsapp = whatsappUrl("Hi Honeybee, I have a question about your honey.");
+  const whatsapp = whatsappUrl("Hi HonyB, I have a question about your honey.");
 
   return (
     <footer className="relative mt-24 border-t border-gold-400/15 bg-forest-900/60">
