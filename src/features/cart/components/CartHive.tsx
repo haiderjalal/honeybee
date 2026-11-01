@@ -58,7 +58,7 @@ export function CartHive() {
         data-testid="cart-hive"
         animate={{ scale: isOver ? 1.45 : isDragging ? 1.25 : 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="pointer-events-auto relative grid size-20 place-items-center rounded-full focus-visible:outline-offset-4 sm:size-24"
+        className="pointer-events-auto relative grid size-16 place-items-center rounded-full focus-visible:outline-offset-4 sm:size-24"
       >
         <span ref={scope} className="absolute inset-0 grid place-items-center">
           <svg

@@ -78,6 +78,7 @@ export function SwarmIntro() {
           alt=""
           width={1200}
           height={396}
+          sizes="(max-width: 640px) 72vw, 480px"
           priority
           className="mx-auto w-[min(72vw,30rem)] drop-shadow-[0_0_14px_rgb(6_19_14/0.95)] drop-shadow-[0_4px_30px_rgb(0_0_0/0.7)]"
         />
