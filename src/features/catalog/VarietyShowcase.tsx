@@ -6,7 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ROUTES, SECTION_IDS } from "@/constants/routes";
-import { getJarSizes, getVarieties } from "@/services/catalog.service";
+import { getDiscoverSlug, getJarSizes, getVarieties } from "@/services/catalog.service";
 import { formatPkr } from "@/utils/formatPkr";
 import { honeyStyle } from "@/utils/honeyStyle";
 
@@ -56,7 +56,7 @@ export function VarietyShowcase() {
                   </div>
                   <h3 className="relative mt-8 font-display text-3xl text-cream-50">
                     <Link
-                      href={ROUTES.variety(variety.slug)}
+                      href={ROUTES.discover(getDiscoverSlug(variety))}
                       className="after:absolute after:inset-0 after:content-['']"
                     >
                       {variety.name}

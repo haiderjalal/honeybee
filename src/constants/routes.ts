@@ -2,6 +2,7 @@ export const ROUTES = {
   home: "/",
   checkout: "/checkout",
   variety: (slug: string) => `/honey/${slug}`,
+  discover: (discoverSlug: string) => `/discover/${discoverSlug}`,
 } as const;
 
 export const SECTION_IDS = {
