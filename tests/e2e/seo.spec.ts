@@ -20,6 +20,18 @@ test.describe("SEO and GEO", () => {
     expect((await request.get("/manifest.webmanifest")).ok()).toBe(true);
   });
 
+  test("favicon and Apple touch icon are served and linked", async ({ page, request }) => {
+    for (const path of ["/icon.png", "/apple-icon.png"]) {
+      const response = await request.get(path);
+      expect(response.ok()).toBe(true);
+      expect(response.headers()["content-type"]).toContain("image/png");
+    }
+
+    await page.goto("/");
+    await expect(page.locator('link[rel="icon"]').first()).toHaveAttribute("href", /icon\.png/);
+    await expect(page.locator('link[rel="apple-touch-icon"]').first()).toHaveAttribute("href", /apple-icon\.png/);
+  });
+
   test("home page has one h1, metadata and structured data", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("h1")).toHaveCount(1);
