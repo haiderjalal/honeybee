@@ -21,7 +21,7 @@ export function Process() {
           eyebrow="How it works"
           title={
             <>
-              From hive to home <span className="text-amber-800 italic">in five steps.</span>
+              From hive to home <span className="text-gold italic">in five steps.</span>
             </>
           }
           description="No online payment, no accounts. Just send a request and a real person confirms everything with you."
@@ -48,8 +48,8 @@ export function Process() {
                     </svg>
                     <span className="relative font-display text-2xl text-gold-300">{index + 1}</span>
                   </span>
-                  <h3 className="mt-5 font-display text-xl text-forest-950">{step.title}</h3>
-                  <p className="mt-2 max-w-60 text-sm text-forest-900/85">{step.body}</p>
+                  <h3 className="mt-5 font-display text-xl text-cream-50">{step.title}</h3>
+                  <p className="mt-2 max-w-60 text-sm text-cream-300">{step.body}</p>
                 </Reveal>
               </li>
             ))}

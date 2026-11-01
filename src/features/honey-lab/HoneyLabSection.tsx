@@ -14,7 +14,7 @@ export function HoneyLabSection() {
           eyebrow="The Honey Lab"
           title={
             <>
-              Harvest a comb. <span className="text-amber-800 italic">Fill your hive.</span>
+              Harvest a comb. <span className="text-gold italic">Fill your hive.</span>
             </>
           }
           description="Choose a honeycomb and our bee will fill the jars. Then drag the jar you want into your hive in the corner — or tap Add to hive."

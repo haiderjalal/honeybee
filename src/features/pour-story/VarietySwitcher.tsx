@@ -23,8 +23,8 @@ export function VarietySwitcher({ varieties, value, onChange }: VarietySwitcherP
             className={cn(
               "relative flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 text-sm transition-colors has-focus-visible:outline-2 has-focus-visible:outline-gold-300",
               checked
-                ? "border-forest-950 bg-forest-950 text-cream-50"
-                : "border-forest-950/25 text-forest-900 hover:border-forest-950/60",
+                ? "border-gold-400 bg-gold-400/15 text-cream-50"
+                : "border-cream-50/15 text-cream-300 hover:border-gold-400/50",
             )}
           >
             <input

@@ -13,8 +13,8 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
 
   return (
     <Container className="flex min-h-[80svh] flex-col items-center justify-center gap-6 pt-24 text-center">
-      <h1 className="font-display text-4xl text-forest-950">Something got sticky</h1>
-      <p className="max-w-md text-forest-900/85">We hit an unexpected problem loading this page. Please try again.</p>
+      <h1 className="font-display text-4xl text-cream-50">Something got sticky</h1>
+      <p className="max-w-md text-cream-300">We hit an unexpected problem loading this page. Please try again.</p>
       <div className="flex gap-3">
         <Button onClick={reset}>Try again</Button>
         <ButtonLink href="/" variant="secondary">
