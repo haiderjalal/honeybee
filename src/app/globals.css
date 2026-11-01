@@ -530,7 +530,7 @@ body::before {
   z-index: -1;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='83' viewBox='0 0 48 83'><g fill='rgb(255,255,255)' fill-opacity='.22' stroke='rgb(164,101,10)' stroke-opacity='.45' stroke-width='1.5'><circle cx='0' cy='0' r='19'/><circle cx='48' cy='0' r='19'/><circle cx='0' cy='83' r='19'/><circle cx='48' cy='83' r='19'/><circle cx='24' cy='41.5' r='19'/></g></svg>");
   background-size: 48px 83px;
-  opacity: 0.8;
+  opacity: 0.2;
   pointer-events: none;
   animation: honeycomb-drift 40s linear infinite;
   @media (prefers-reduced-motion: reduce) {

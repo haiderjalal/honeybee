@@ -15,7 +15,7 @@ export function organizationJsonLd(): object {
     "@id": ORGANIZATION_ID,
     name: SITE.name,
     url: SITE.url,
-    logo: absoluteUrl("/icon.svg"),
+    logo: absoluteUrl("/icon.png"),
     description: SITE.description,
     areaServed: { "@type": "Country", name: SITE.country },
   };
