@@ -35,6 +35,15 @@ export const FAQ_ITEMS: readonly FaqItem[] = [
     answer:
       "Keep the jar tightly closed at room temperature, away from direct sunlight and moisture. Always use a clean, dry spoon.",
   },
+  {
+    question: "Is your honey pure?",
+    answer: "Yes. Every honey we sell is original, pure and natural, straight from the hive.",
+  },
+  {
+    question: "Do you offer a warranty or refund?",
+    answer:
+      "Yes. We offer a lifetime warranty on our honey. If you find something wrong with your honey, we give you a refund.",
+  },
 ];
 
 export const ORDER_STEPS = [
@@ -49,7 +58,7 @@ export const PROMISES = [
   {
     id: "raw",
     title: "Raw and unfiltered",
-    body: "Never blended with syrups. Just honey, the way the hive made it.",
+    body: "Original, pure and natural. Never blended with syrups, just honey the way the hive made it.",
   },
   {
     id: "varieties",
