@@ -3,14 +3,27 @@ import { getPricedVariant } from "@/services/catalog.service";
 import { normalizePhone, sanitizeLine, sanitizeMultiline } from "@/utils/text";
 
 import type { CustomerInput, InquiryInput, InquiryItemInput } from "@/lib/validations/inquiry.schema";
-import type { InquiryNotifier, InquiryResult, OrderCustomer, OrderLine, OrderRequest } from "./inquiry.types";
+import type {
+  InquiryNotifier,
+  InquiryResult,
+  OrderCustomer,
+  OrderLine,
+  OrderRecorder,
+  OrderRequest,
+} from "./inquiry.types";
 
 const IDEMPOTENCY_TTL_MS = 10 * 60 * 1000;
 
 interface InquiryServiceDeps {
   notifier: InquiryNotifier;
+  recorder?: OrderRecorder | null;
   now?: () => Date;
   createReference?: (now: Date) => string;
+}
+
+export interface SubmitOptions {
+  /** Runs follow-up work after the response is sent (e.g. Next.js `after`). Defaults to awaiting it. */
+  defer?: (work: Promise<void>) => void;
 }
 
 export function createOrderReference(now: Date, random: () => number = Math.random): string {
@@ -28,17 +41,24 @@ export function createOrderReference(now: Date, random: () => number = Math.rand
  */
 export class InquiryService {
   private readonly notifier: InquiryNotifier;
+  private readonly recorder: OrderRecorder | null;
   private readonly now: () => Date;
   private readonly createReference: (now: Date) => string;
   private readonly recent = new Map<string, { expiresAt: number; result: Promise<InquiryResult> }>();
 
-  constructor({ notifier, now = () => new Date(), createReference = createOrderReference }: InquiryServiceDeps) {
+  constructor({
+    notifier,
+    recorder = null,
+    now = () => new Date(),
+    createReference = createOrderReference,
+  }: InquiryServiceDeps) {
     this.notifier = notifier;
+    this.recorder = recorder;
     this.now = now;
     this.createReference = createReference;
   }
 
-  submit(input: InquiryInput): Promise<InquiryResult> {
+  submit(input: InquiryInput, options: SubmitOptions = {}): Promise<InquiryResult> {
     const nowMs = this.now().getTime();
     this.evictExpired(nowMs);
 
@@ -46,7 +66,7 @@ export class InquiryService {
     const existing = this.recent.get(input.idempotencyKey);
     if (existing) return existing.result;
 
-    const result = this.process(input).then((outcome) => {
+    const result = this.process(input, options.defer).then((outcome) => {
       // Failed deliveries may be retried with the same key.
       if (!outcome.ok) this.recent.delete(input.idempotencyKey);
       return outcome;
@@ -55,7 +75,7 @@ export class InquiryService {
     return result;
   }
 
-  private async process(input: InquiryInput): Promise<InquiryResult> {
+  private async process(input: InquiryInput, defer?: SubmitOptions["defer"]): Promise<InquiryResult> {
     const lines = this.priceLines(input.items);
     if (!lines) {
       return {
@@ -87,14 +107,29 @@ export class InquiryService {
 
     logger.info("Inquiry submitted", { reference: order.reference, lines: lines.length, subtotal: order.subtotal });
 
-    if (order.customer.email) {
-      // The order is already with us; a failed confirmation email must not fail the request.
-      await this.notifier.notifyCustomer(order).catch((error: unknown) => {
-        logger.warn("Customer confirmation email failed", { reference: order.reference, error });
-      });
-    }
+    // The order is already with us, so these follow-ups never fail the request. When the caller can defer
+    // work, the customer gets the answer without waiting for the confirmation email or the spreadsheet.
+    const followUps = Promise.all([this.recordOrder(order), this.confirmCustomer(order)]).then(() => undefined);
+    if (defer) defer(followUps);
+    else await followUps;
 
     return { ok: true, reference: order.reference };
+  }
+
+  private async recordOrder(order: OrderRequest): Promise<void> {
+    if (!this.recorder) return;
+    try {
+      await this.recorder.record(order);
+    } catch (error) {
+      logger.error("Order not written to the order sheet; add it by hand", { reference: order.reference, error });
+    }
+  }
+
+  private async confirmCustomer(order: OrderRequest): Promise<void> {
+    if (!order.customer.email) return;
+    await this.notifier.notifyCustomer(order).catch((error: unknown) => {
+      logger.warn("Customer confirmation email failed", { reference: order.reference, error });
+    });
   }
 
   /** Merges duplicate lines and resolves authoritative prices. Returns null if any item is unknown. */

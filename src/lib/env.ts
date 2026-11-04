@@ -10,6 +10,11 @@ const serverEnvSchema = z
     INQUIRY_FROM_EMAIL: z.string().trim().min(3).optional(),
     /** "console" logs emails instead of sending (local development and e2e tests). */
     EMAIL_TRANSPORT: z.enum(["resend", "console"]).optional(),
+    /** Optional order log in Google Sheets. Recording needs the sheet ID, service account email and private key. */
+    GOOGLE_SHEET_ID: z.string().trim().optional(),
+    GOOGLE_SHEET_TAB: z.string().trim().optional(),
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string().trim().optional(),
+    GOOGLE_PRIVATE_KEY: z.string().trim().optional(),
   })
   .superRefine((env, ctx) => {
     const transport = env.EMAIL_TRANSPORT ?? (env.RESEND_API_KEY ? "resend" : "console");

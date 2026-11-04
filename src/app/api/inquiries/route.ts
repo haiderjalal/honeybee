@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { logger } from "@/lib/logger";
 import { createRateLimiter } from "@/lib/rateLimit";
@@ -93,7 +93,7 @@ export async function POST(request: Request): Promise<InquiryResponse> {
   }
 
   try {
-    const result = await getInquiryService().submit(parsed.data);
+    const result = await getInquiryService().submit(parsed.data, { defer: after });
     if (!result.ok) return fail(result.reason === "invalid_items" ? 422 : 502, result.message);
 
     return NextResponse.json(
