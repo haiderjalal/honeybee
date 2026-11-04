@@ -47,8 +47,8 @@ describe("InquiryService", () => {
         varietySlug: "sidr-honey",
         sizeId: "1kg",
         quantity: 3,
-        unitPrice: 6000,
-        lineTotal: 18000,
+        unitPrice: 3499,
+        lineTotal: 10497,
       }),
       expect.objectContaining({
         varietySlug: "acacia-honey",
@@ -58,7 +58,7 @@ describe("InquiryService", () => {
         lineTotal: 1900,
       }),
     ]);
-    expect(order.subtotal).toBe(19900);
+    expect(order.subtotal).toBe(12397);
     expect(order.customer).toEqual({
       name: "Ayesha Khan",
       phone: "03001234567",

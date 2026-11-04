@@ -50,11 +50,11 @@ describe("cart store", () => {
   });
 
   it("derives lines, totals and jar count from catalogue prices", () => {
-    store().addItem("sidr-honey", "1kg", 2); // 2 × 6,000
+    store().addItem("sidr-honey", "1kg", 2); // 2 × 3,499
     store().addItem("acacia-honey", "500g"); // 1 × 1,900
     const lines = toCartLines(store().items);
-    expect(lines.map((l) => l.lineTotal)).toEqual([12000, 1900]);
-    expect(calculateSubtotal(lines)).toBe(13900);
+    expect(lines.map((l) => l.lineTotal)).toEqual([6998, 1900]);
+    expect(calculateSubtotal(lines)).toBe(8898);
     expect(countJars(store().items)).toBe(3);
   });
 });
