@@ -20,7 +20,7 @@ interface InquiryFormProps {
   onSubmit: (values: CustomerInput & { website?: string }) => void;
 }
 
-const FIELDS = ["name", "phone", "email", "city", "address", "notes"] as const;
+const FIELDS = ["name", "phone", "email", "city", "address", "referral", "notes"] as const;
 
 export function InquiryForm({ subtotal, submitting, serverMessage, serverErrors, onSubmit }: InquiryFormProps) {
   const {
@@ -31,7 +31,7 @@ export function InquiryForm({ subtotal, submitting, serverMessage, serverErrors,
   } = useForm<CustomerInput>({
     resolver: zodResolver(customerSchema),
     mode: "onTouched",
-    defaultValues: { name: "", phone: "", email: "", city: "", address: "", notes: "" },
+    defaultValues: { name: "", phone: "", email: "", city: "", address: "", referral: "", notes: "" },
   });
 
   // Surface server-side validation messages on the matching fields.
@@ -102,6 +102,16 @@ export function InquiryForm({ subtotal, submitting, serverMessage, serverErrors,
         rows={3}
         error={errors.address?.message}
         {...register("address")}
+      />
+      <InputField
+        id="referral"
+        label="Referred by"
+        optional
+        maxLength={80}
+        autoComplete="off"
+        hint="If a friend or customer referred you, add their name. We'll confirm your referral benefits when we call."
+        error={errors.referral?.message}
+        {...register("referral")}
       />
       <TextareaField
         id="notes"

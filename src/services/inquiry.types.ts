@@ -16,6 +16,7 @@ export interface OrderCustomer {
   email: string | null;
   city: string;
   address: string;
+  referral: string | null;
   notes: string | null;
 }
 

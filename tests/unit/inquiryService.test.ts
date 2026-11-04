@@ -65,9 +65,16 @@ describe("InquiryService", () => {
       email: "ayesha@example.com",
       city: "Lahore",
       address: "House 12,\nModel Town",
+      referral: null,
       notes: null,
     });
     expect(notifier.notifyCustomer).toHaveBeenCalledOnce();
+  });
+
+  it("keeps a sanitised referral name on the order", async () => {
+    const { notifier, sent } = createNotifier();
+    await createService(notifier).submit({ ...baseInput, referral: "  Sara\r\nAli " });
+    expect(sent[0].customer.referral).toBe("Sara Ali");
   });
 
   it("rejects items that are not in the catalogue without notifying anyone", async () => {

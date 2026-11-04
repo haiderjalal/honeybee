@@ -20,6 +20,7 @@ Creates an order request and emails it to the team.
 | `email`          | string                                                      | Optional; valid email, ≤ 120 characters                                    |
 | `city`           | string                                                      | 2–60 characters                                                            |
 | `address`        | string                                                      | 8–300 characters                                                           |
+| `referral`       | string                                                      | Optional; name of the customer who referred the buyer; 2–80 characters     |
 | `notes`          | string                                                      | Optional; ≤ 500 characters                                                 |
 | `items`          | `{ varietySlug, sizeId: "500g"\|"1kg"\|"2kg", quantity }[]` | 1–15 lines; quantity 1–20                                                  |
 | `idempotencyKey` | UUID                                                        | Reuse when retrying the same submission                                    |

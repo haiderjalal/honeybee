@@ -25,6 +25,7 @@ describe("ownerInquiryEmail", () => {
         email: null,
         city: "Lahore",
         address: "<b>x</b>",
+        referral: "<i>Sara</i>",
         notes: null,
       },
       lines: [
@@ -44,6 +45,8 @@ describe("ownerInquiryEmail", () => {
     expect(email.html).not.toContain("<img src=x");
     expect(email.html).toContain("&lt;img src=x onerror=alert(1)&gt;");
     expect(email.html).toContain("Rs 6,000");
+    expect(email.html).not.toContain("<i>Sara</i>");
+    expect(email.html).toContain("&lt;i&gt;Sara&lt;/i&gt;");
   });
 });
 

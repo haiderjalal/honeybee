@@ -22,6 +22,16 @@ export const customerSchema = z.object({
     .trim()
     .min(8, "Please enter your full delivery address.")
     .max(300, "Please keep the address under 300 characters."),
+  referral: z
+    .union([
+      z.literal(""),
+      z
+        .string()
+        .trim()
+        .min(2, "Please enter the referrer's name.")
+        .max(80, "Please keep the name under 80 characters."),
+    ])
+    .optional(),
   notes: z.string().trim().max(500, "Please keep notes under 500 characters.").optional(),
 });
 
