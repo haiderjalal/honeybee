@@ -56,9 +56,13 @@ async function readEnvelope(response: Response): Promise<ApiResponse<InquiryRece
 export function useInquirySubmit() {
   const [state, setState] = useState<SubmitState>(INITIAL);
   const idempotencyKey = useRef<string | null>(null);
+  const inFlight = useRef(false);
 
   const submit = useCallback(
     async (customer: CustomerInput & { website?: string }, items: CartItem[]): Promise<boolean> => {
+      // A double-click can fire twice before React re-renders the disabled button, so guard here too.
+      if (inFlight.current) return false;
+      inFlight.current = true;
       idempotencyKey.current ??= createIdempotencyKey();
       setState({ ...INITIAL, status: "submitting" });
 
@@ -90,6 +94,8 @@ export function useInquirySubmit() {
       } catch {
         setState({ status: "error", reference: null, message: CONNECTION_MESSAGE, fieldErrors: {} });
         return false;
+      } finally {
+        inFlight.current = false;
       }
     },
     [],

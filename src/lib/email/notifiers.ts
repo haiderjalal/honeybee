@@ -9,7 +9,8 @@ import { customerConfirmationEmail, ownerInquiryEmail, type EmailContent } from 
 import type { ServerEnv } from "@/lib/env";
 import type { InquiryNotifier, OrderRequest } from "@/services/inquiry.types";
 
-const SEND_TIMEOUT_MS = 8000;
+// Three attempts at this limit still finish before the browser gives up after 20 s.
+const SEND_TIMEOUT_MS = 6000;
 const MAX_ATTEMPTS = 3;
 
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {

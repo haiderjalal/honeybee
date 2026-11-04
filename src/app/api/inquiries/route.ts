@@ -10,6 +10,9 @@ import type { ApiResponse, FieldErrors, InquiryReceipt } from "@/types/api";
 const MAX_BODY_BYTES = 16 * 1024;
 const limiter = createRateLimiter({ limit: 5, windowMs: 10 * 60 * 1000 });
 
+/** Email retries can take close to 20 s in the worst case; allow headroom so a send is never cut off. */
+export const maxDuration = 30;
+
 type InquiryResponse = NextResponse<ApiResponse<InquiryReceipt>>;
 
 const fail = (status: number, message: string, errors?: FieldErrors, headers?: HeadersInit): InquiryResponse =>
