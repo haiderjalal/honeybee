@@ -29,7 +29,7 @@ export const HONEY_VARIETIES: readonly HoneyVariety[] = [
     tastingNotes: ["Caramel", "Toasted malt", "Buttery finish"],
     bestFor: ["A morning spoonful", "Warm water and lemon", "Gifting"],
     palette: { light: "#f3a943", base: "#b9650f", deep: "#5e2905" },
-    prices: { "500g": 3200, "1kg": 6000, "2kg": 11500 },
+    prices: { "500g": 1870, "1kg": 3499, "2kg": 6710 },
   },
   {
     slug: "acacia-honey",

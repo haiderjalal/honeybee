@@ -52,9 +52,9 @@ test.describe("honey lab", () => {
 
     const drawer = page.getByRole("dialog", { name: "Your hive" });
     await expect(drawer).toBeVisible();
-    await expect(drawer.getByTestId("drawer-subtotal")).toHaveText("Rs 6,000");
+    await expect(drawer.getByTestId("drawer-subtotal")).toHaveText("Rs 3,499");
     await drawer.getByRole("button", { name: "Add one more Sidr Honey 1 kg" }).click();
-    await expect(drawer.getByTestId("drawer-subtotal")).toHaveText("Rs 12,000");
+    await expect(drawer.getByTestId("drawer-subtotal")).toHaveText("Rs 6,998");
   });
 
   test("adds a jar by dragging it into the hive", async ({ page, isMobile }) => {

@@ -23,7 +23,7 @@ describe("catalog", () => {
   });
 
   it("resolves priced variants and rejects unknown ones", () => {
-    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(6000);
+    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(3499);
     expect(getPricedVariant("sidr-honey", "5kg")).toBeNull();
     expect(getPricedVariant("manuka", "1kg")).toBeNull();
     expect(getVarietyBySlug("nope")).toBeNull();
