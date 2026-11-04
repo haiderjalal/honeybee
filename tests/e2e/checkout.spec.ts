@@ -21,7 +21,7 @@ test.describe("checkout", () => {
   test("validates fields, then submits an order request", async ({ page }) => {
     await page.addInitScript((cart) => window.localStorage.setItem("honeybee-cart", cart), CART);
     await page.goto("/checkout");
-    await expect(page.getByTestId("checkout-subtotal")).toHaveText("Rs 3,800");
+    await expect(page.getByTestId("checkout-subtotal")).toHaveText("Rs 1,380");
 
     await page.getByRole("button", { name: /Send order request/ }).click();
     await expect(page.getByText("Please enter your full name.")).toBeVisible();

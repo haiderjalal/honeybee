@@ -45,7 +45,7 @@ export const HONEY_VARIETIES: readonly HoneyVariety[] = [
     tastingNotes: ["Spring blossom", "Soft vanilla", "Clean sweetness"],
     bestFor: ["Tea and green tea", "Children", "Yoghurt and breakfast"],
     palette: { light: "#ffe6a0", base: "#f0c24f", deep: "#b07e12" },
-    prices: { "500g": 1900, "1kg": 3600, "2kg": 6900 },
+    prices: { "500g": 690, "1kg": 1299, "2kg": 2490 },
   },
   {
     slug: "wildflower-honey",
