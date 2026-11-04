@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
   // leaving it off allows `dynamicParams = false` for hard 404s on unknown products.
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    // AVIF is noticeably smaller than WebP; browsers without AVIF support fall back to WebP.
+    formats: ["image/avif", "image/webp"],
+    // Brand images change rarely, so browsers and the CDN can keep optimised copies for a week.
+    minimumCacheTTL: 60 * 60 * 24 * 7,
+  },
   experimental: {
     optimizePackageImports: ["lucide-react", "motion"],
   },
@@ -25,7 +31,14 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // Brand files keep their names when they are replaced, so cache them for a day rather than forever.
+      {
+        source: "/brand/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      },
+    ];
   },
 };
 
