@@ -11,6 +11,7 @@ import { CartLineItem } from "@/features/cart/components/CartLineItem";
 import { calculateSubtotal, toCartLines, useCartStore } from "@/features/cart/store/cartStore";
 import { formatPkr } from "@/utils/formatPkr";
 
+import { CheckoutSkeleton } from "./CheckoutSkeleton";
 import { InquiryForm } from "./InquiryForm";
 import { useInquirySubmit } from "./useInquirySubmit";
 
@@ -24,9 +25,7 @@ export function CheckoutView() {
 
   if (status === "success" && reference) return <SuccessState reference={reference} />;
 
-  if (!hasHydrated) {
-    return <div className="h-96 animate-pulse rounded-3xl bg-forest-800/50" aria-label="Loading your hive" />;
-  }
+  if (!hasHydrated) return <CheckoutSkeleton />;
 
   if (lines.length === 0) {
     return (

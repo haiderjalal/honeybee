@@ -19,7 +19,8 @@ import "./globals.css";
 // Cormorant Garamond gives the editorial, luxury display voice; Manrope keeps body copy crisp and modern.
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  // The site only uses regular and medium weights, in roman and italic, so nothing else is downloaded.
+  weight: ["400", "500"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
