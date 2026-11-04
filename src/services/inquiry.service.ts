@@ -123,12 +123,14 @@ export class InquiryService {
   private normalizeCustomer(input: CustomerInput): OrderCustomer {
     const email = input.email ? sanitizeLine(input.email).toLowerCase() : "";
     const notes = input.notes ? sanitizeMultiline(input.notes) : "";
+    const referral = input.referral ? sanitizeLine(input.referral) : "";
     return {
       name: sanitizeLine(input.name),
       phone: normalizePhone(input.phone),
       email: email || null,
       city: sanitizeLine(input.city),
       address: sanitizeMultiline(input.address),
+      referral: referral || null,
       notes: notes || null,
     };
   }

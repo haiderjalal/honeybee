@@ -56,6 +56,7 @@ export function ownerInquiryEmail(order: OrderRequest): EmailContent {
     ["Email", customer.email],
     ["City", customer.city],
     ["Address", customer.address],
+    ["Referred by", customer.referral],
     ["Notes", customer.notes],
   ];
   const detailsHtml = details

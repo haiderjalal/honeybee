@@ -54,6 +54,12 @@ describe("inquirySchema", () => {
     expect(errorFields({ ...valid, idempotencyKey: "abc" })).toEqual(["idempotencyKey"]);
   });
 
+  it("accepts an optional referral name and rejects one that is too short", () => {
+    expect(errorFields({ ...valid, referral: "" })).toEqual([]);
+    expect(errorFields({ ...valid, referral: "Sara Ali" })).toEqual([]);
+    expect(errorFields({ ...valid, referral: "S" })).toEqual(["referral"]);
+  });
+
   it("enforces maximum lengths", () => {
     expect(errorFields({ ...valid, notes: "x".repeat(501) })).toEqual(["notes"]);
   });
