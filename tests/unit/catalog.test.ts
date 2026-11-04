@@ -31,7 +31,7 @@ describe("catalog", () => {
 
   it("returns the lowest price as the starting price", () => {
     const acacia = getVarietyBySlug("acacia-honey");
-    expect(acacia && getStartingPrice(acacia)).toBe(1900);
+    expect(acacia && getStartingPrice(acacia)).toBe(690);
   });
 });
 

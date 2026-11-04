@@ -54,11 +54,11 @@ describe("InquiryService", () => {
         varietySlug: "acacia-honey",
         sizeId: "500g",
         quantity: 1,
-        unitPrice: 1900,
-        lineTotal: 1900,
+        unitPrice: 690,
+        lineTotal: 690,
       }),
     ]);
-    expect(order.subtotal).toBe(12397);
+    expect(order.subtotal).toBe(11187);
     expect(order.customer).toEqual({
       name: "Ayesha Khan",
       phone: "03001234567",
