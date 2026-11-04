@@ -35,5 +35,10 @@ export interface InquiryNotifier {
   notifyCustomer(order: OrderRequest): Promise<void>;
 }
 
+/** Keeps a copy of every accepted order, e.g. in a spreadsheet. Best-effort: a failure never rejects the order. */
+export interface OrderRecorder {
+  record(order: OrderRequest): Promise<void>;
+}
+
 export type InquiryResult =
   { ok: true; reference: string } | { ok: false; reason: "invalid_items" | "delivery_failed"; message: string };
