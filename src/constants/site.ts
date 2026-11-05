@@ -4,6 +4,9 @@ export const SITE = {
   tagline: "Raw honey, poured to order",
   description:
     "HonyB delivers raw Sidr, Acacia and Wildflower honey across Pakistan in 500 g, 1 kg and 2 kg jars. Pick your honey, drop jars in your hive and send an order request — we confirm by phone and deliver to your door.",
+  /** Search-result snippet for the home page; kept within the 120–160 character range search engines show. */
+  metaDescription:
+    "Pure, raw Sidr (beri), Acacia and Wildflower honey, delivered across Pakistan. Send an order request and we confirm by phone.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
   locale: "en_PK",
   country: "Pakistan",

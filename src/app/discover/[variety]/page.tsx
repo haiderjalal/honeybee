@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const variety = getVarietyByDiscoverSlug((await params).variety);
   if (!variety) return { title: "Honey not found", robots: { index: false } };
 
-  const title = `Discover ${variety.name}: taste, origin and how to enjoy it`;
+  const title = `Discover ${variety.name}: taste and origin`;
   const description = `${variety.tagline} Learn where ${variety.name.toLowerCase()} comes from, how it tastes and the best ways to enjoy it. Jars from ${formatPkr(getStartingPrice(variety))}.`;
   const path = ROUTES.discover(getDiscoverSlug(variety));
 

@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} — Raw Sidr, Acacia & Wildflower Honey in Pakistan`,
     template: `%s | ${SITE.name}`,
   },
-  description: SITE.description,
+  description: SITE.metaDescription,
   applicationName: SITE.name,
   keywords: [
     "raw honey Pakistan",
