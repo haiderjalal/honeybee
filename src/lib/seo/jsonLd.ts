@@ -119,10 +119,16 @@ export function articleJsonLd({
     description,
     url,
     mainEntityOfPage: url,
+    image: absoluteUrl(`${path}/opengraph-image`),
+    datePublished: modified,
     dateModified: modified,
     inLanguage: "en-PK",
-    author: { "@id": ORGANIZATION_ID },
-    publisher: { "@id": ORGANIZATION_ID },
+    author: { "@type": "Organization", name: SITE.name, url: SITE.url },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/icon.png") },
+    },
   };
 }
 
