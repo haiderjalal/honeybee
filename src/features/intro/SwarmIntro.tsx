@@ -75,7 +75,7 @@ export function SwarmIntro() {
       <div className="intro-wordmark pointer-events-none relative text-center" aria-hidden="true">
         <Image
           src="/brand/honyb-wordmark.png"
-          alt=""
+          alt="HonyB"
           width={1200}
           height={396}
           sizes="(max-width: 640px) 72vw, 480px"

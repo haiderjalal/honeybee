@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const variety = getVarietyBySlug((await params).slug);
   if (!variety) return { title: "Honey not found", robots: { index: false } };
 
-  const title = `${variety.name} (${variety.localName}) — 500 g, 1 kg & 2 kg from ${formatPkr(getStartingPrice(variety))}`;
-  const description = `${variety.tagline} ${variety.description.split(". ")[0]}. Order raw ${variety.name.toLowerCase()} online with delivery across Pakistan.`;
+  const title = `${variety.name} (${variety.localName}) from ${formatPkr(getStartingPrice(variety))}`;
+  const description = `${variety.tagline} Order raw ${variety.name} online with delivery across Pakistan. Jars from ${formatPkr(getStartingPrice(variety))}, and we confirm every order by phone.`;
   const path = ROUTES.variety(variety.slug);
 
   return {
