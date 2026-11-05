@@ -4,6 +4,7 @@ import { Check, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { SizePrice } from "@/features/catalog/SizePrice";
 import { useAddToCart } from "@/features/cart/useAddToCart";
 import { useCartUiStore } from "@/features/cart/store/cartUiStore";
 import { cn } from "@/utils/cn";
@@ -57,7 +58,7 @@ export function AddToHivePanel({ variety, sizes }: AddToHivePanelProps) {
                   className="visually-hidden"
                 />
                 <span className="font-display text-xl text-cream-50">{size.label}</span>
-                <span className="text-sm text-cream-300 tabular-nums">{formatPkr(variety.prices[size.id])}</span>
+                <SizePrice variety={variety} sizeId={size.id} className="text-sm text-cream-300" />
               </label>
             );
           })}

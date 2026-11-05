@@ -29,7 +29,8 @@ export const HONEY_VARIETIES: readonly HoneyVariety[] = [
     tastingNotes: ["Caramel", "Toasted malt", "Buttery finish"],
     bestFor: ["A morning spoonful", "Warm water and lemon", "Gifting"],
     palette: { light: "#f3a943", base: "#b9650f", deep: "#5e2905" },
-    prices: { "500g": 1870, "1kg": 3499, "2kg": 6710 },
+    prices: { "500g": 1970, "1kg": 3699, "2kg": 7090 },
+    listPrices: { "1kg": 3999 },
   },
   {
     slug: "acacia-honey",
@@ -45,7 +46,8 @@ export const HONEY_VARIETIES: readonly HoneyVariety[] = [
     tastingNotes: ["Spring blossom", "Soft vanilla", "Clean sweetness"],
     bestFor: ["Tea and green tea", "Children", "Yoghurt and breakfast"],
     palette: { light: "#ffe6a0", base: "#f0c24f", deep: "#b07e12" },
-    prices: { "500g": 690, "1kg": 1299, "2kg": 2490 },
+    prices: { "500g": 790, "1kg": 1499, "2kg": 2870 },
+    listPrices: { "1kg": 1699 },
   },
   {
     slug: "wildflower-honey",

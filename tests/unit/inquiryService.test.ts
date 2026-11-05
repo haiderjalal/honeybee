@@ -47,18 +47,18 @@ describe("InquiryService", () => {
         varietySlug: "sidr-honey",
         sizeId: "1kg",
         quantity: 3,
-        unitPrice: 3499,
-        lineTotal: 10497,
+        unitPrice: 3699,
+        lineTotal: 11097,
       }),
       expect.objectContaining({
         varietySlug: "acacia-honey",
         sizeId: "500g",
         quantity: 1,
-        unitPrice: 690,
-        lineTotal: 690,
+        unitPrice: 790,
+        lineTotal: 790,
       }),
     ]);
-    expect(order.subtotal).toBe(11187);
+    expect(order.subtotal).toBe(11887);
     expect(order.customer).toEqual({
       name: "Ayesha Khan",
       phone: "03001234567",
