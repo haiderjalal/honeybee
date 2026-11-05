@@ -4,6 +4,7 @@ export const ROUTES = {
   variety: (slug: string) => `/honey/${slug}`,
   discover: (discoverSlug: string) => `/discover/${discoverSlug}`,
   guide: "/guide/buy-original-honey",
+  guideArticle: (slug: string) => `/guide/${slug}`,
 } as const;
 
 export const SECTION_IDS = {

@@ -2,6 +2,7 @@ import { FAQ_ITEMS, ORDER_STEPS, PROMISES } from "@/constants/content";
 import { DELIVERY_CITIES } from "@/constants/delivery";
 import { ROUTES } from "@/constants/routes";
 import { SITE, absoluteUrl } from "@/constants/site";
+import { ARTICLES, type GuideArticleContent } from "@/features/guide/articles";
 import {
   GUIDE_DESCRIPTION,
   GUIDE_FAQ,
@@ -47,6 +48,7 @@ ${varieties}
 ## Buying guide
 
 - [${GUIDE_TITLE}](${absoluteUrl(ROUTES.guide)}): ${GUIDE_DESCRIPTION}
+${ARTICLES.map((article) => `- [${article.title}](${absoluteUrl(ROUTES.guideArticle(article.slug))}): ${article.description}`).join("\n")}
 
 ## Ordering
 
@@ -87,6 +89,29 @@ ${sections}
 ${GUIDE_FAQ.map((item) => `#### ${item.question}\n\n${item.answer}`).join("\n\n")}`;
 }
 
+/** One guide article as markdown, so AI assistants can read its full text. */
+function articleMarkdown(article: GuideArticleContent): string {
+  const sections = article.sections
+    .map((section) =>
+      [`#### ${section.heading}`, ...section.paragraphs, ...(section.points ?? []).map((point) => `- ${point}`)].join(
+        "\n\n",
+      ),
+    )
+    .join("\n\n");
+
+  return `## ${article.title}
+
+URL: ${absoluteUrl(ROUTES.guideArticle(article.slug))}
+
+${article.intro.join("\n\n")}
+
+${sections}
+
+#### Guide questions
+
+${article.faq.map((item) => `##### ${item.question}\n\n${item.answer}`).join("\n\n")}`;
+}
+
 export function buildLlmsFullTxt(): string {
   const sizes = getJarSizes();
   const varieties = getVarieties()
@@ -118,6 +143,8 @@ ${prices}`;
 ${varieties}
 
 ${guideMarkdown()}
+
+${ARTICLES.map(articleMarkdown).join("\n\n")}
 
 ## How ordering works
 
