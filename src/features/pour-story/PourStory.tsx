@@ -19,6 +19,7 @@ import { Honeycomb } from "@/components/art/Honeycomb";
 import { HoneyJar } from "@/components/art/HoneyJar";
 import { Container } from "@/components/layout/Container";
 import { SECTION_IDS } from "@/constants/routes";
+import { SizePrice } from "@/features/catalog/SizePrice";
 import { formatPkr } from "@/utils/formatPkr";
 import { honeyStyle } from "@/utils/honeyStyle";
 import { cn } from "@/utils/cn";
@@ -101,7 +102,7 @@ export function PourStory({ varieties, sizes }: PourStoryProps) {
                 >
                   <p className="font-display text-5xl text-gold-300 sm:text-6xl">{activeSize.label}</p>
                   <p className="mt-1 text-xl text-cream-50">
-                    {copy.heading} · <span className="tabular-nums">{formatPkr(variety.prices[activeSize.id])}</span>
+                    {copy.heading} · <SizePrice variety={variety} sizeId={activeSize.id} />
                   </p>
                   <p className="mt-2 max-w-sm text-cream-300">{copy.body}</p>
                 </m.div>

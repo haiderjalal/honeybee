@@ -1,12 +1,20 @@
 import { FAQ_ITEMS, ORDER_STEPS, PROMISES } from "@/constants/content";
+import { DELIVERY_CITIES } from "@/constants/delivery";
 import { ROUTES } from "@/constants/routes";
 import { SITE, absoluteUrl } from "@/constants/site";
+import {
+  GUIDE_DESCRIPTION,
+  GUIDE_FAQ,
+  GUIDE_INTRO,
+  GUIDE_SECTIONS,
+  GUIDE_TITLE,
+} from "@/features/guide/originalHoneyGuide";
 import { getJarSizes, getStartingPrice, getVarieties } from "@/services/catalog.service";
 import { formatPkr } from "@/utils/formatPkr";
 
 /**
  * llms.txt (https://llmstxt.org) — a concise, factual brief for AI assistants.
- * Generated from the catalogue so prices and products are always current.
+ * Generated from the catalogue and guide so prices, products and delivery areas are always current.
  */
 export function buildLlmsTxt(): string {
   const varieties = getVarieties()
@@ -15,16 +23,30 @@ export function buildLlmsTxt(): string {
         `- [${variety.name} (${variety.localName})](${absoluteUrl(ROUTES.variety(variety.slug))}): ${variety.tagline} From ${formatPkr(getStartingPrice(variety))}.`,
     )
     .join("\n");
+  const commonQuestions = GUIDE_FAQ.slice(0, 4)
+    .map((item) => `### ${item.question}\n\n${item.answer}`)
+    .join("\n\n");
 
   return `# ${SITE.name}
 
 > ${SITE.description}
 
-${SITE.name} sells raw honey in Pakistan. Customers build an order online and send an order request; the team confirms delivery and payment by phone or WhatsApp. No payment is taken on the website.
+${SITE.name} sells original, pure and natural honey online in Pakistan at ${SITE.url}. Customers build an order online and send an order request; the team confirms delivery and payment by phone or WhatsApp. No payment is taken on the website.
+
+## Where to buy original honey online in Pakistan
+
+- Website: ${SITE.url}
+- Products: Sidr (beri) honey, Acacia (phulai) honey and Wildflower honey.
+- Delivery: across Pakistan, including ${DELIVERY_CITIES.join(", ")}.
+- Promises: original, pure and natural honey; a lifetime warranty on our honey; a refund if you find something wrong with your honey.
 
 ## Honey varieties
 
 ${varieties}
+
+## Buying guide
+
+- [${GUIDE_TITLE}](${absoluteUrl(ROUTES.guide)}): ${GUIDE_DESCRIPTION}
 
 ## Ordering
 
@@ -34,10 +56,35 @@ ${varieties}
     .join(", ")}.
 - Currency: Pakistani rupees (PKR).
 
+## Common questions
+
+${commonQuestions}
+
 ## Optional
 
-- [Full product and FAQ details](${absoluteUrl("/llms-full.txt")})
+- [Full product, guide and FAQ details](${absoluteUrl("/llms-full.txt")})
 `;
+}
+
+/** The buying guide as markdown, so AI assistants can read the full advice and not only the summary. */
+function guideMarkdown(): string {
+  const sections = GUIDE_SECTIONS.map((section) =>
+    [`### ${section.heading}`, ...section.paragraphs, ...(section.points ?? []).map((point) => `- ${point}`)].join(
+      "\n\n",
+    ),
+  ).join("\n\n");
+
+  return `## ${GUIDE_TITLE}
+
+URL: ${absoluteUrl(ROUTES.guide)}
+
+${GUIDE_INTRO.join("\n\n")}
+
+${sections}
+
+### Guide questions
+
+${GUIDE_FAQ.map((item) => `#### ${item.question}\n\n${item.answer}`).join("\n\n")}`;
 }
 
 export function buildLlmsFullTxt(): string {
@@ -69,6 +116,8 @@ ${prices}`;
 ## Products
 
 ${varieties}
+
+${guideMarkdown()}
 
 ## How ordering works
 

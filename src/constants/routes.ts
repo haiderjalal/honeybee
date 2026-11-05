@@ -3,6 +3,7 @@ export const ROUTES = {
   checkout: "/checkout",
   variety: (slug: string) => `/honey/${slug}`,
   discover: (discoverSlug: string) => `/discover/${discoverSlug}`,
+  guide: "/guide/buy-original-honey",
 } as const;
 
 export const SECTION_IDS = {

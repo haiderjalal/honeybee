@@ -7,6 +7,7 @@ import { getDiscoverSlug, getVarieties } from "@/services/catalog.service";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: absoluteUrl(ROUTES.home), changeFrequency: "weekly", priority: 1 },
+    { url: absoluteUrl(ROUTES.guide), changeFrequency: "monthly", priority: 0.9 },
     ...getVarieties().flatMap((variety) => [
       {
         url: absoluteUrl(ROUTES.discover(getDiscoverSlug(variety))),

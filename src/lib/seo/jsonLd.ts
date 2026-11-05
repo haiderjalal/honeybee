@@ -100,6 +100,32 @@ export function breadcrumbJsonLd(trail: { name: string; path: string }[]): objec
   };
 }
 
+export function articleJsonLd({
+  title,
+  description,
+  path,
+  modified,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  modified: string;
+}): object {
+  const url = absoluteUrl(path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: url,
+    dateModified: modified,
+    inLanguage: "en-PK",
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+  };
+}
+
 export function faqJsonLd(items: readonly FaqItem[] = FAQ_ITEMS): object {
   return {
     "@context": "https://schema.org",
