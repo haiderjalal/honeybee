@@ -19,4 +19,5 @@ export const NAV_LINKS = [
   { label: "Honey lab", href: `/#${SECTION_IDS.lab}` },
   { label: "How it works", href: `/#${SECTION_IDS.process}` },
   { label: "FAQ", href: `/#${SECTION_IDS.faq}` },
+  { label: "Honey guide", href: ROUTES.guide },
 ] as const;
