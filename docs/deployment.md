@@ -2,7 +2,7 @@
 
 1. Import the GitHub repository into Vercel (framework preset: Next.js).
 2. Add the environment variables from `.env.example` for **Production** (and Preview if wanted):
-   - `NEXT_PUBLIC_SITE_URL` — the live domain, e.g. `https://www.honeybee.pk` (used for canonical URLs, sitemap, OG
+   - `NEXT_PUBLIC_SITE_URL` — the live domain, e.g. `https://honyb.musme.co` (used for canonical URLs, sitemap, OG
      images and `llms.txt`; set it before the first production build).
    - `RESEND_API_KEY`, `INQUIRY_FROM_EMAIL`, `INQUIRY_TO_EMAIL`.
    - Optional: `NEXT_PUBLIC_WHATSAPP_NUMBER`.

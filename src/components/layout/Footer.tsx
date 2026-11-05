@@ -45,6 +45,11 @@ export function Footer() {
               </li>
             ))}
             <li>
+              <Link href={ROUTES.guide} className="text-cream-300 hover:text-gold-300">
+                How to buy original honey
+              </Link>
+            </li>
+            <li>
               <Link href={ROUTES.checkout} className="text-cream-300 hover:text-gold-300">
                 Send an order request
               </Link>
