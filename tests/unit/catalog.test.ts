@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { HONEY_VARIETIES, JAR_SIZES } from "@/constants/catalog";
-import { getPricedVariant, getStartingPrice, getVarietyBySlug } from "@/services/catalog.service";
+import { getListPrice, getPricedVariant, getStartingPrice, getVarietyBySlug } from "@/services/catalog.service";
 import { formatPkr } from "@/utils/formatPkr";
 
 describe("catalog", () => {
@@ -23,7 +23,7 @@ describe("catalog", () => {
   });
 
   it("resolves priced variants and rejects unknown ones", () => {
-    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(3499);
+    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(3699);
     expect(getPricedVariant("sidr-honey", "5kg")).toBeNull();
     expect(getPricedVariant("manuka", "1kg")).toBeNull();
     expect(getVarietyBySlug("nope")).toBeNull();
@@ -31,7 +31,13 @@ describe("catalog", () => {
 
   it("returns the lowest price as the starting price", () => {
     const acacia = getVarietyBySlug("acacia-honey");
-    expect(acacia && getStartingPrice(acacia)).toBe(690);
+    expect(acacia && getStartingPrice(acacia)).toBe(790);
+  });
+
+  it("shows the original price only for jars on offer", () => {
+    const sidr = getVarietyBySlug("sidr-honey");
+    expect(sidr && getListPrice(sidr, "1kg")).toBe(3999);
+    expect(sidr && getListPrice(sidr, "500g")).toBeNull();
   });
 });
 

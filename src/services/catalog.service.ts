@@ -39,3 +39,9 @@ export function getPricedVariant(varietySlug: string, sizeId: string): PricedVar
 export function getStartingPrice(variety: HoneyVariety): number {
   return Math.min(...Object.values(variety.prices));
 }
+
+/** The original price of a jar that is on offer, or null when it is sold at its normal price. */
+export function getListPrice(variety: HoneyVariety, sizeId: SizeId): number | null {
+  const listPrice = variety.listPrices?.[sizeId];
+  return listPrice && listPrice > variety.prices[sizeId] ? listPrice : null;
+}

@@ -27,7 +27,10 @@ export interface HoneyVariety {
   tastingNotes: string[];
   bestFor: string[];
   palette: HoneyPalette;
+  /** What the customer pays for each jar. */
   prices: Record<SizeId, number>;
+  /** Original price of a jar on offer, shown struck through next to its sale price. */
+  listPrices?: Partial<Record<SizeId, number>>;
 }
 
 export interface PricedVariant {

@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/shared/Reveal";
 import { ROUTES } from "@/constants/routes";
+import { SizePrice } from "@/features/catalog/SizePrice";
 import { getJarSizes } from "@/services/catalog.service";
-import { formatPkr } from "@/utils/formatPkr";
 
 import type { HoneyVariety } from "@/types/catalog";
 
@@ -85,7 +85,7 @@ export function DiscoverDetails({ variety }: DiscoverDetailsProps) {
                 <li key={size.id} className="rounded-2xl border border-gold-400/20 bg-forest-900 p-6 text-center">
                   <p className="text-sm text-cream-500">{size.label}</p>
                   <p className="mt-2 font-display text-4xl text-gold-300 tabular-nums">
-                    {formatPkr(variety.prices[size.id])}
+                    <SizePrice variety={variety} sizeId={size.id} />
                   </p>
                 </li>
               ))}
