@@ -6,8 +6,8 @@ import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ROUTES, SECTION_IDS } from "@/constants/routes";
+import { SizePrice } from "@/features/catalog/SizePrice";
 import { getDiscoverSlug, getJarSizes, getVarieties } from "@/services/catalog.service";
-import { formatPkr } from "@/utils/formatPkr";
 import { honeyStyle } from "@/utils/honeyStyle";
 
 import type { CSSProperties } from "react";
@@ -70,7 +70,7 @@ export function VarietyShowcase() {
                       <div key={size.id}>
                         <dt className="text-xs text-cream-500">{size.label}</dt>
                         <dd className="text-sm font-medium text-cream-50 tabular-nums">
-                          {formatPkr(variety.prices[size.id])}
+                          <SizePrice variety={variety} sizeId={size.id} />
                         </dd>
                       </div>
                     ))}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { isPointOverDropZone } from "@/features/cart/dropZone";
 import { useCartUiStore } from "@/features/cart/store/cartUiStore";
 import { useAddToCart } from "@/features/cart/useAddToCart";
+import { SizePrice } from "@/features/catalog/SizePrice";
 import { formatPkr } from "@/utils/formatPkr";
 
 import type { HoneyVariety, JarSize } from "@/types/catalog";
@@ -84,7 +85,7 @@ export function DraggableJar({ size, variety, ready, registerJar }: DraggableJar
         <span className="font-display text-lg text-cream-50 sm:text-xl">{size.label}</span>
         {variety ? (
           <span className="block tabular-nums sm:inline sm:before:content-['_·_']">
-            {formatPkr(variety.prices[size.id])}
+            <SizePrice variety={variety} sizeId={size.id} />
           </span>
         ) : null}
       </p>
