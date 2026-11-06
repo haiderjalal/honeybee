@@ -158,19 +158,43 @@ describe("decidePurchaseStart", () => {
 });
 
 describe("membership sales gate", () => {
-  it("keeps public sales closed and lists every open requirement by default", () => {
-    expect(isMembershipSalesOpen()).toBe(false);
-    expect(getMembershipSalesBlockers()).toHaveLength(4);
+  it("keeps public sales closed and lists every open requirement while nothing is set up", () => {
+    const closed = {
+      refundPolicy: null,
+      bankTransfer: null,
+      adminVerificationAvailable: false,
+      storageConfigured: false,
+    };
+    expect(isMembershipSalesOpen(closed)).toBe(false);
+    expect(getMembershipSalesBlockers(closed)).toHaveLength(4);
   });
 
   it("opens sales only when every requirement is complete", () => {
-    const launch = {
-      feeRefundPolicyPublished: true,
-      paymentRouteConfigured: true,
+    const complete = {
+      refundPolicy: "Fees are refunded in full if we cancel the membership.",
+      bankTransfer: {
+        method: "Easypaisa",
+        accountTitle: "HonyB",
+        accountNumber: "03001234567",
+        iban: null,
+      },
       adminVerificationAvailable: true,
       storageConfigured: true,
     };
-    expect(isMembershipSalesOpen(launch)).toBe(true);
-    expect(getMembershipSalesBlockers({ ...launch, feeRefundPolicyPublished: false })).toHaveLength(1);
+    expect(isMembershipSalesOpen(complete)).toBe(true);
+    expect(getMembershipSalesBlockers({ ...complete, refundPolicy: null })).toHaveLength(1);
+  });
+
+  it("keeps sales closed while any bank detail is blank", () => {
+    const incomplete = {
+      refundPolicy: "Policy text",
+      bankTransfer: { method: "Easypaisa", accountTitle: "HonyB", accountNumber: "", iban: null },
+      adminVerificationAvailable: true,
+      storageConfigured: true,
+    };
+    expect(isMembershipSalesOpen(incomplete)).toBe(false);
+    expect(getMembershipSalesBlockers(incomplete)).toEqual([
+      "Bank transfer details for membership fees have not been confirmed.",
+    ]);
   });
 });

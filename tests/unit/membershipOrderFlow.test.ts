@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import { MEMBERSHIP } from "@/constants/membership";
 import { createOrderMembershipPort } from "@/services/membership/membershipOrderPort";
@@ -18,6 +18,13 @@ import { addCalendarMonths } from "@/services/membership/membershipTerms";
 import { createMembershipTestDatabase, type MembershipTestDatabase } from "../fakes/membershipDatabase";
 
 import type { OrderLine } from "@/services/inquiry.types";
+
+// The launch gate is opened and closed per test, so the public purchase check can be exercised both ways.
+const gate = vi.hoisted(() => ({ open: true }));
+vi.mock("@/services/membership/membershipSalesGate", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/services/membership/membershipSalesGate")>();
+  return { ...actual, isMembershipSalesOpen: () => gate.open };
+});
 
 /** The order flow end to end: service and port over the real migration in embedded Postgres. */
 
@@ -91,10 +98,25 @@ async function activateMember(activatedAt: Date = NOW): Promise<string> {
 }
 
 describe("public purchase gate", () => {
+  it("opens a fee purchase for a customer while sales are open", async () => {
+    gate.open = true;
+    const purchase = await startFeePurchase(repo, {
+      userId: await db.createUser(),
+      phone: "0300 1234567",
+      now: NOW,
+    });
+    expect(purchase).toMatchObject({ status: "awaiting_payment", purpose: "new", phone: "03001234567" });
+  });
+
   it("refuses public fee purchases while sales are closed", async () => {
-    await expect(
-      startFeePurchase(repo, { userId: await db.createUser(), phone: "0300 1234567", now: NOW }),
-    ).rejects.toThrow("membership: sales_closed");
+    gate.open = false;
+    try {
+      await expect(
+        startFeePurchase(repo, { userId: await db.createUser(), phone: "0300 1234567", now: NOW }),
+      ).rejects.toThrow("membership: sales_closed");
+    } finally {
+      gate.open = true;
+    }
   });
 });
 

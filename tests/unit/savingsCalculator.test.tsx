@@ -21,9 +21,18 @@ describe("SavingsCalculator", () => {
   it("explains that a jar on sale is not eligible for the membership discount", () => {
     render(<SavingsCalculator varieties={varieties} />);
 
-    // The default selection is Sidr 1 kg, which is on sale.
+    choose("calc-variety", "sidr-honey");
+    choose("calc-size", "1kg");
+
+    // Sidr 1 kg is on sale, so membership cannot discount it.
     expect(screen.getByTestId("calc-outcome").textContent).toContain("This jar is on sale");
     expect(screen.queryByTestId("calc-saving")).toBeNull();
+  });
+
+  it("starts on a jar that shows a saving, so the first view is not a sale jar", () => {
+    render(<SavingsCalculator varieties={varieties} />);
+
+    expect(screen.getByTestId("calc-saving").textContent).toBe("Rs 350");
   });
 
   it("shows the saving and the fee-recovery count at current prices", () => {

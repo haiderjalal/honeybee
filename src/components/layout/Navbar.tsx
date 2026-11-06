@@ -15,13 +15,13 @@ export function Navbar() {
           <Logo priority />
         </Link>
 
-        <nav aria-label="Main" className="hidden md:block">
+        <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="nav-link rounded-full px-4 py-2 text-sm text-cream-300 transition-colors hover:text-gold-300"
+                  className="nav-link rounded-full px-4 py-2 text-sm whitespace-nowrap text-cream-300 transition-colors hover:text-gold-300"
                 >
                   {link.label}
                 </Link>
@@ -36,7 +36,7 @@ export function Navbar() {
             type="button"
             popoverTarget="mobile-menu"
             aria-label="Open menu"
-            className="grid size-11 place-items-center rounded-full text-cream-100 hover:bg-cream-50/5 md:hidden"
+            className="grid size-11 place-items-center rounded-full text-cream-100 hover:bg-cream-50/5 lg:hidden"
           >
             <Menu className="size-5" aria-hidden="true" />
           </button>
@@ -47,7 +47,7 @@ export function Navbar() {
         id="mobile-menu"
         popover="auto"
         aria-label="Mobile"
-        className="[inset:auto_1rem_auto_auto] m-0 mt-18 ml-auto w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-gold-400/20 bg-forest-900/95 p-3 text-cream-100 shadow-2xl backdrop-blur-xl md:hidden"
+        className="[inset:auto_1rem_auto_auto] m-0 mt-18 ml-auto w-[min(20rem,calc(100vw-2rem))] rounded-2xl border border-gold-400/20 bg-forest-900/95 p-3 text-cream-100 shadow-2xl backdrop-blur-xl lg:hidden"
       >
         <ul className="flex flex-col">
           {NAV_LINKS.map((link) => (

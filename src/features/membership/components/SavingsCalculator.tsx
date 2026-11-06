@@ -19,6 +19,13 @@ interface SavingsCalculatorProps {
   varieties: readonly CalculatorVariety[];
 }
 
+/**
+ * The first jar shown. Wildflower 2 kg is at regular price and above the minimum, so the first view shows a saving
+ * rather than a sale jar that membership cannot discount.
+ */
+const DEFAULT_VARIETY_SLUG = "wildflower-honey";
+const DEFAULT_SIZE_ID: SizeId = "2kg";
+
 const feeText = formatPkrMinor(MEMBERSHIP.feeMinor);
 const maxDiscountText = formatPkr(MEMBERSHIP.maxDiscountPerOrderMinor / 100);
 const discountPercentText = `${MEMBERSHIP.discountRateBps / 100}%`;
@@ -34,8 +41,10 @@ function clampQuantity(value: string): number {
  * the number shown here matches what an order would receive. Checkout remains the authority on the real price.
  */
 export function SavingsCalculator({ varieties }: SavingsCalculatorProps) {
-  const [varietySlug, setVarietySlug] = useState(varieties[0]?.slug ?? "");
-  const [sizeId, setSizeId] = useState<SizeId>("1kg");
+  const [varietySlug, setVarietySlug] = useState(
+    varieties.some((item) => item.slug === DEFAULT_VARIETY_SLUG) ? DEFAULT_VARIETY_SLUG : (varieties[0]?.slug ?? ""),
+  );
+  const [sizeId, setSizeId] = useState<SizeId>(DEFAULT_SIZE_ID);
   const [quantity, setQuantity] = useState(1);
 
   const variety = varieties.find((item) => item.slug === varietySlug) ?? varieties[0];

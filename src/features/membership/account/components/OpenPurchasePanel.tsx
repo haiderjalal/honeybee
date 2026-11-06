@@ -3,6 +3,7 @@ import { formatPkrMinor } from "@/utils/formatPkr";
 import { formatAccountDate } from "../accountCopy";
 
 import { AccountPanel } from "./AccountPanel";
+import { BankTransferDetails } from "./BankTransferDetails";
 import { DetailItem } from "./DetailItem";
 import { PaymentReferenceForm } from "./PaymentReferenceForm";
 
@@ -29,8 +30,9 @@ export function OpenPurchasePanel({ purchase }: OpenPurchasePanelProps): ReactEl
     return (
       <AccountPanel id="payment-title" title="Complete your payment">
         {details}
+        <BankTransferDetails />
         <ol className="flex list-decimal flex-col gap-2 pl-5 text-cream-100">
-          <li>Pay the membership fee by bank transfer.</li>
+          <li>Pay the membership fee to the account above.</li>
           <li>Enter the transfer reference below.</li>
         </ol>
         <p className="text-sm text-cream-500">Your membership starts only after we have verified the payment.</p>
