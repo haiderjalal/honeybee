@@ -9,6 +9,7 @@ import { SECTION_IDS } from "@/constants/routes";
 import { whatsappUrl } from "@/constants/site";
 import { CartLineItem } from "@/features/cart/components/CartLineItem";
 import { calculateSubtotal, toCartLines, useCartStore } from "@/features/cart/store/cartStore";
+import { MemberDiscountSummary } from "@/features/membership/components/MemberDiscountSummary";
 import { formatPkr } from "@/utils/formatPkr";
 
 import { CheckoutSkeleton } from "./CheckoutSkeleton";
@@ -80,6 +81,7 @@ export function CheckoutView() {
             {formatPkr(subtotal)}
           </span>
         </div>
+        <MemberDiscountSummary items={items} subtotal={subtotal} />
         <p className="mt-2 text-xs text-cream-500">Delivery charges, if any, are confirmed when we call you.</p>
       </aside>
     </div>

@@ -2,6 +2,7 @@ import { after, NextResponse } from "next/server";
 
 import { logger } from "@/lib/logger";
 import { createRateLimiter } from "@/lib/rateLimit";
+import { getSignedInUser } from "@/lib/supabase/session";
 import { inquirySchema } from "@/lib/validations/inquiry.schema";
 import { getInquiryService } from "@/services/inquiry.factory";
 
@@ -93,7 +94,11 @@ export async function POST(request: Request): Promise<InquiryResponse> {
   }
 
   try {
-    const result = await getInquiryService().submit(parsed.data, { defer: after });
+    // A signed-in member may get their discount. Anyone else, or a failed session check, orders at regular prices.
+    const customerUserId = await getSignedInUser()
+      .then((user) => user?.id ?? null)
+      .catch(() => null);
+    const result = await getInquiryService().submit(parsed.data, { defer: after, customerUserId });
     if (!result.ok) return fail(result.reason === "invalid_items" ? 422 : 502, result.message);
 
     return NextResponse.json(

@@ -15,6 +15,11 @@ const serverEnvSchema = z
     GOOGLE_SHEET_TAB: z.string().trim().optional(),
     GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string().trim().optional(),
     GOOGLE_PRIVATE_KEY: z.string().trim().optional(),
+    /** Supabase project for membership accounts and records. Membership features stay off until all three are set. */
+    NEXT_PUBLIC_SUPABASE_URL: z.url().optional(),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().trim().optional(),
+    /** Server-only. Used by the membership RPCs. Never expose it to the browser. */
+    SUPABASE_SERVICE_ROLE_KEY: z.string().trim().optional(),
   })
   .superRefine((env, ctx) => {
     const transport = env.EMAIL_TRANSPORT ?? (env.RESEND_API_KEY ? "resend" : "console");

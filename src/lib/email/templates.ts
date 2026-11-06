@@ -1,5 +1,6 @@
+import { MEMBERSHIP } from "@/constants/membership";
 import { SITE } from "@/constants/site";
-import { formatPkr } from "@/utils/formatPkr";
+import { formatPkr, formatPkrMinor } from "@/utils/formatPkr";
 
 import type { OrderRequest } from "@/services/inquiry.types";
 
@@ -7,6 +8,28 @@ export interface EmailContent {
   subject: string;
   html: string;
   text: string;
+}
+
+const memberDiscountLabel = `Member discount (${MEMBERSHIP.discountRateBps / 100}%)`;
+
+/** Total after the member discount, in minor units. Equal to the subtotal when no discount applies. */
+function orderTotalMinor(order: OrderRequest): number {
+  return order.subtotal * 100 - (order.membership?.discountMinor ?? 0);
+}
+
+/** Rows for the member discount and the total to confirm. Empty for non-member orders. */
+function membershipRowsHtml(order: OrderRequest): string {
+  if (!order.membership) return "";
+  return `<tr><td colspan="2" style="padding:4px 0">${memberDiscountLabel}</td><td style="padding:4px 0;text-align:right">− ${formatPkrMinor(order.membership.discountMinor)}</td></tr>
+<tr><td colspan="2" style="padding:12px 0;font-weight:bold">Total to confirm</td><td style="padding:12px 0;text-align:right;font-weight:bold">${formatPkrMinor(orderTotalMinor(order))}</td></tr>`;
+}
+
+function membershipTextLines(order: OrderRequest): string[] {
+  if (!order.membership) return [];
+  return [
+    `${memberDiscountLabel}: -${formatPkrMinor(order.membership.discountMinor)}`,
+    `Total to confirm: ${formatPkrMinor(orderTotalMinor(order))}`,
+  ];
 }
 
 const HTML_ESCAPES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
@@ -37,7 +60,7 @@ function linesTable(order: OrderRequest): string {
     )
     .join("");
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:15px">${rows}
-<tr><td colspan="2" style="padding:12px 0;font-weight:bold">Subtotal</td><td style="padding:12px 0;text-align:right;font-weight:bold">${formatPkr(order.subtotal)}</td></tr></table>
+<tr><td colspan="2" style="padding:12px 0;font-weight:bold">Subtotal</td><td style="padding:12px 0;text-align:right;font-weight:bold">${formatPkr(order.subtotal)}</td></tr>${membershipRowsHtml(order)}</table>
 <p style="font-size:13px;color:#7a5a2a">Delivery charges, if any, are confirmed on call.</p>`;
 }
 
@@ -45,6 +68,7 @@ function linesText(order: OrderRequest): string {
   return [
     ...order.lines.map((line) => `- ${line.name} ${line.sizeLabel} x ${line.quantity} = ${formatPkr(line.lineTotal)}`),
     `Subtotal: ${formatPkr(order.subtotal)}`,
+    ...membershipTextLines(order),
   ].join("\n");
 }
 
@@ -58,6 +82,7 @@ export function ownerInquiryEmail(order: OrderRequest): EmailContent {
     ["Address", customer.address],
     ["Referred by", customer.referral],
     ["Notes", customer.notes],
+    ["Member discount", order.membership ? formatPkrMinor(order.membership.discountMinor) : null],
   ];
   const detailsHtml = details
     .filter(([, value]) => value)
@@ -68,7 +93,7 @@ export function ownerInquiryEmail(order: OrderRequest): EmailContent {
     .join("");
 
   return {
-    subject: `New order request ${order.reference} — ${customer.name} (${formatPkr(order.subtotal)})`,
+    subject: `New order request ${order.reference} — ${customer.name} (${order.membership ? formatPkrMinor(orderTotalMinor(order)) : formatPkr(order.subtotal)})`,
     html: layout(
       `New order request ${order.reference}`,
       `<table role="presentation" cellpadding="0" cellspacing="0" style="font-size:15px;margin-bottom:20px">${detailsHtml}</table>${linesTable(order)}

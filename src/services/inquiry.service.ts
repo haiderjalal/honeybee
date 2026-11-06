@@ -8,6 +8,8 @@ import type {
   InquiryResult,
   OrderCustomer,
   OrderLine,
+  OrderMembership,
+  OrderMembershipPort,
   OrderRecorder,
   OrderRequest,
 } from "./inquiry.types";
@@ -17,6 +19,8 @@ const IDEMPOTENCY_TTL_MS = 10 * 60 * 1000;
 interface InquiryServiceDeps {
   notifier: InquiryNotifier;
   recorder?: OrderRecorder | null;
+  /** Member discounts. Null or absent means every order is priced at regular prices. */
+  membership?: OrderMembershipPort | null;
   now?: () => Date;
   createReference?: (now: Date) => string;
 }
@@ -24,6 +28,8 @@ interface InquiryServiceDeps {
 export interface SubmitOptions {
   /** Runs follow-up work after the response is sent (e.g. Next.js `after`). Defaults to awaiting it. */
   defer?: (work: Promise<void>) => void;
+  /** The signed-in customer, when the request came from a signed-in session. Only then is a member discount checked. */
+  customerUserId?: string | null;
 }
 
 export function createOrderReference(now: Date, random: () => number = Math.random): string {
@@ -42,6 +48,7 @@ export function createOrderReference(now: Date, random: () => number = Math.rand
 export class InquiryService {
   private readonly notifier: InquiryNotifier;
   private readonly recorder: OrderRecorder | null;
+  private readonly membership: OrderMembershipPort | null;
   private readonly now: () => Date;
   private readonly createReference: (now: Date) => string;
   private readonly recent = new Map<string, { expiresAt: number; result: Promise<InquiryResult> }>();
@@ -49,11 +56,13 @@ export class InquiryService {
   constructor({
     notifier,
     recorder = null,
+    membership = null,
     now = () => new Date(),
     createReference = createOrderReference,
   }: InquiryServiceDeps) {
     this.notifier = notifier;
     this.recorder = recorder;
+    this.membership = membership;
     this.now = now;
     this.createReference = createReference;
   }
@@ -66,7 +75,7 @@ export class InquiryService {
     const existing = this.recent.get(input.idempotencyKey);
     if (existing) return existing.result;
 
-    const result = this.process(input, options.defer).then((outcome) => {
+    const result = this.process(input, options).then((outcome) => {
       // Failed deliveries may be retried with the same key.
       if (!outcome.ok) this.recent.delete(input.idempotencyKey);
       return outcome;
@@ -75,7 +84,8 @@ export class InquiryService {
     return result;
   }
 
-  private async process(input: InquiryInput, defer?: SubmitOptions["defer"]): Promise<InquiryResult> {
+  private async process(input: InquiryInput, options: SubmitOptions): Promise<InquiryResult> {
+    const { defer } = options;
     const lines = this.priceLines(input.items);
     if (!lines) {
       return {
@@ -86,18 +96,23 @@ export class InquiryService {
     }
 
     const createdAt = this.now();
+    const reference = this.createReference(createdAt);
+    // The reservation is made before delivery, and released below if delivery fails, so no allowance is lost.
+    const membership = await this.reserveMembership(options.customerUserId ?? null, reference, lines, createdAt);
     const order: OrderRequest = {
-      reference: this.createReference(createdAt),
+      reference,
       createdAt: createdAt.toISOString(),
       customer: this.normalizeCustomer(input),
       lines,
       subtotal: lines.reduce((sum, line) => sum + line.lineTotal, 0),
+      ...(membership ? { membership } : {}),
     };
 
     try {
       await this.notifier.notifyOwner(order);
     } catch (error) {
       logger.error("Inquiry delivery to owner failed", { reference: order.reference, error });
+      if (membership) await this.releaseMembership(order.reference);
       return {
         ok: false,
         reason: "delivery_failed",
@@ -114,6 +129,34 @@ export class InquiryService {
     else await followUps;
 
     return { ok: true, reference: order.reference };
+  }
+
+  /** Reserves the member discount, or returns null. A membership problem never stops the order itself. */
+  private async reserveMembership(
+    customerUserId: string | null,
+    reference: string,
+    lines: OrderLine[],
+    now: Date,
+  ): Promise<OrderMembership | null> {
+    if (!this.membership || !customerUserId) return null;
+    try {
+      const reservation = await this.membership.reserve({ customerUserId, orderReference: reference, lines, now });
+      return reservation ? { discountMinor: reservation.discountMinor } : null;
+    } catch (error) {
+      // The order goes ahead at regular prices. If the database committed the reservation before the failure,
+      // the team can release it from the membership admin area using this reference.
+      logger.error("Member discount could not be checked; order placed at regular prices", { reference, error });
+      return null;
+    }
+  }
+
+  private async releaseMembership(reference: string): Promise<void> {
+    if (!this.membership) return;
+    try {
+      await this.membership.release(reference);
+    } catch (error) {
+      logger.error("Member discount reservation could not be released; release it by hand", { reference, error });
+    }
   }
 
   private async recordOrder(order: OrderRequest): Promise<void> {
