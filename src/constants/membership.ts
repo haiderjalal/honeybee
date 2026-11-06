@@ -27,11 +27,30 @@ export const MEMBERSHIP = {
   renewalReminderDays: [30, 7],
 } as const;
 
+/** The account members pay the membership fee into. Mobile wallets have no IBAN, so it is optional. */
+export interface MembershipBankTransfer {
+  /** The payment method members see, for example "Easypaisa" or a bank name. */
+  method: string;
+  accountTitle: string;
+  accountNumber: string;
+  iban: string | null;
+}
+
+/**
+ * Account for membership fees. Null until the account is confirmed. Sales stay closed while this is null, so no
+ * account details are invented here.
+ */
+export const MEMBERSHIP_BANK_TRANSFER: MembershipBankTransfer | null = null;
+
+/**
+ * The agreed refund and cancellation policy for membership fees, shown to customers. Null until the policy has been
+ * agreed. Sales stay closed while this is null, so no policy is invented here.
+ */
+export const MEMBERSHIP_FEE_REFUND_POLICY: string | null =
+  "Membership fees are non-refundable. This policy does not change refunds on honey orders.";
+
+/** Launch requirements that depend on operations: the database being live and an admin being set up. */
 export interface MembershipLaunchFlags {
-  /** The membership-fee refund and cancellation policy has been agreed and published. */
-  feeRefundPolicyPublished: boolean;
-  /** A real payment route for membership fees is configured (online provider, or verified manual transfer). */
-  paymentRouteConfigured: boolean;
   /** Admins can verify pending membership payments and correct memberships. */
   adminVerificationAvailable: boolean;
   /** Membership records are stored in a database that has been provisioned and migrated. */
@@ -40,11 +59,9 @@ export interface MembershipLaunchFlags {
 
 /**
  * Public sales stay closed until every launch requirement is genuinely complete. Flip a flag only once the
- * matching work is done: the sales gate reads these values and never assumes them.
+ * matching work is done. The policy and bank details above are checked directly, not by a flag.
  */
 export const MEMBERSHIP_LAUNCH: MembershipLaunchFlags = {
-  feeRefundPolicyPublished: false,
-  paymentRouteConfigured: false,
-  adminVerificationAvailable: false,
-  storageConfigured: false,
+  adminVerificationAvailable: true,
+  storageConfigured: true,
 };

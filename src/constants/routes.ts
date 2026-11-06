@@ -24,4 +24,5 @@ export const NAV_LINKS = [
   { label: "How it works", href: `/#${SECTION_IDS.process}` },
   { label: "FAQ", href: `/#${SECTION_IDS.faq}` },
   { label: "Honey guide", href: ROUTES.guide },
+  { label: "Membership", href: ROUTES.membership },
 ] as const;

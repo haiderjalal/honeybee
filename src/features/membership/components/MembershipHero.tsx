@@ -1,18 +1,22 @@
 import { Check } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { MEMBERSHIP } from "@/constants/membership";
 import { MEMBERSHIP_COPY } from "@/constants/membershipContent";
+import { ROUTES } from "@/constants/routes";
+import { isMembershipSalesOpen } from "@/services/membership/membershipSalesGate";
 import { formatPkr } from "@/utils/formatPkr";
 
 const feeText = formatPkr(MEMBERSHIP.feeMinor / 100);
 
 /**
- * Membership introduction and fee summary. The join button stays disabled until the membership join flow exists
- * and every launch requirement is complete (see the sales gate). It never leads to a payment today.
+ * Membership introduction and fee summary. Join leads to the account page, where a member signs in and starts the
+ * fee payment. While any launch requirement is open, Join stays disabled and nothing can be purchased.
  */
 export function MembershipHero() {
+  const salesOpen = isMembershipSalesOpen();
+
   return (
     <section aria-labelledby="membership-title" className="pt-32 pb-16">
       <Container className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
@@ -46,12 +50,20 @@ export function MembershipHero() {
             </li>
           </ul>
 
-          <Button disabled aria-describedby="join-note" className="mt-8 w-full" size="lg">
-            {MEMBERSHIP_COPY.joinLabel}
-          </Button>
-          <p id="join-note" className="mt-3 text-sm text-cream-500">
-            {MEMBERSHIP_COPY.joinUnavailable}
-          </p>
+          {salesOpen ? (
+            <ButtonLink href={ROUTES.membershipAccount} className="mt-8 w-full" size="lg">
+              {MEMBERSHIP_COPY.joinLabel}
+            </ButtonLink>
+          ) : (
+            <>
+              <Button disabled aria-describedby="join-note" className="mt-8 w-full" size="lg">
+                {MEMBERSHIP_COPY.joinLabel}
+              </Button>
+              <p id="join-note" className="mt-3 text-sm text-cream-500">
+                {MEMBERSHIP_COPY.joinUnavailable}
+              </p>
+            </>
+          )}
         </aside>
       </Container>
     </section>
