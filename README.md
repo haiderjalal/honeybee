@@ -60,3 +60,4 @@ Marketing copy (FAQ, ordering steps, promises) is in [`src/constants/content.ts`
 - [Architecture](docs/architecture.md)
 - [API](docs/api.md)
 - [Deployment](docs/deployment.md)
+- [Membership (The HonyB Hive)](docs/membership.md) — rules, status and open decisions
