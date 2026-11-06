@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 import { cn } from "@/utils/cn";
 
@@ -70,6 +70,24 @@ export function TextareaField({ id, label, hint, error, optional, className, ...
         className={cn(CONTROL, "min-h-24 resize-y", className)}
         {...props}
       />
+    </FieldShell>
+  );
+}
+
+type SelectFieldProps = Omit<FieldShellProps, "children"> & SelectHTMLAttributes<HTMLSelectElement>;
+
+export function SelectField({ id, label, hint, error, optional, className, children, ...props }: SelectFieldProps) {
+  return (
+    <FieldShell id={id} label={label} hint={hint} error={error} optional={optional}>
+      <select
+        id={id}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy(id, hint, error)}
+        className={cn(CONTROL, className)}
+        {...props}
+      >
+        {children}
+      </select>
     </FieldShell>
   );
 }

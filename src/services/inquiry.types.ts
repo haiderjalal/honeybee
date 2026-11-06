@@ -20,6 +20,11 @@ export interface OrderCustomer {
   notes: string | null;
 }
 
+/** The member discount reserved for an order. Amounts are minor units (paisa), unlike the whole-rupee subtotal. */
+export interface OrderMembership {
+  discountMinor: number;
+}
+
 /** A fully validated, server-priced order request. */
 export interface OrderRequest {
   reference: string;
@@ -27,6 +32,26 @@ export interface OrderRequest {
   customer: OrderCustomer;
   lines: OrderLine[];
   subtotal: number;
+  /** Present only when a member discount was reserved, so non-member orders keep their existing shape. */
+  membership?: OrderMembership;
+}
+
+export interface OrderMembershipReservation {
+  discountMinor: number;
+}
+
+/**
+ * Membership hooks for order creation. A reserved discount is released when the order cannot be delivered.
+ * Implementations must never throw for ordinary "not eligible" outcomes; those return null.
+ */
+export interface OrderMembershipPort {
+  reserve(input: {
+    customerUserId: string;
+    orderReference: string;
+    lines: OrderLine[];
+    now: Date;
+  }): Promise<OrderMembershipReservation | null>;
+  release(orderReference: string): Promise<void>;
 }
 
 /** Delivery channel for new orders (email today; WhatsApp or a database can implement this later). */
