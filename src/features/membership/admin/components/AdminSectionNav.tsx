@@ -1,10 +1,12 @@
 import Link from "next/link";
 import type { JSX } from "react";
 
+import { ROUTES } from "@/constants/routes";
+
 const SECTION_LINKS = [
   { href: "#pending", label: "Pending payments" },
   { href: "#members", label: "Members" },
-  { href: "#orders", label: "Orders" },
+  { href: ROUTES.adminOrders, label: "Customer orders" },
   { href: "#reporting", label: "Reporting" },
 ] as const;
 

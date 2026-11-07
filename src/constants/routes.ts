@@ -8,6 +8,7 @@ export const ROUTES = {
   membership: "/membership",
   membershipAccount: "/membership/account",
   adminMembership: "/admin/membership",
+  adminOrders: "/admin/orders",
 } as const;
 
 export const SECTION_IDS = {

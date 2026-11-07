@@ -29,6 +29,8 @@ const MESSAGES: Record<string, string> = {
   allowance_used: "All six discounted orders for this term are already used.",
   term_not_active: "This membership is not active.",
   reminders_not_configured: "Reminders are not set up yet.",
+  order_not_found: "We couldn't find that order.",
+  invalid_status: "Choose a valid order status.",
   counter_invalid: "That change would break the discount allowance, so it was not saved.",
 };
 
