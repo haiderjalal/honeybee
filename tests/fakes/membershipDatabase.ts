@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { PGlite } from "@electric-sql/pglite";
@@ -12,7 +12,15 @@ import { btree_gist } from "@electric-sql/pglite/contrib/btree_gist";
  * invariants that the locks protect: no overspent allowance, no duplicate terms, and idempotent retries.
  */
 
-const MIGRATION_PATH = join(process.cwd(), "supabase/migrations/20261106120000_membership_hive.sql");
+const MIGRATIONS_DIR = join(process.cwd(), "supabase/migrations");
+
+/** Every migration in filename order, so later migrations can rely on earlier ones, as they do in Supabase. */
+function readMigrations(): string[] {
+  return readdirSync(MIGRATIONS_DIR)
+    .filter((name) => name.endsWith(".sql"))
+    .sort()
+    .map((name) => readFileSync(join(MIGRATIONS_DIR, name), "utf8"));
+}
 
 export interface MembershipTestDatabase {
   /** Calls a membership RPC with the same payload shape Supabase RPC uses. Business errors reject with "membership: ...". */
@@ -27,7 +35,9 @@ export interface MembershipTestDatabase {
 export async function createMembershipTestDatabase(): Promise<MembershipTestDatabase> {
   const db = await PGlite.create({ extensions: { btree_gist } });
   await db.exec("create schema auth; create table auth.users (id uuid primary key);");
-  await db.exec(readFileSync(MIGRATION_PATH, "utf8"));
+  for (const migration of readMigrations()) {
+    await db.exec(migration);
+  }
 
   return {
     async rpc(name, payload) {
