@@ -40,7 +40,12 @@ export interface MembershipBankTransfer {
  * Account for membership fees. Null until the account is confirmed. Sales stay closed while this is null, so no
  * account details are invented here.
  */
-export const MEMBERSHIP_BANK_TRANSFER: MembershipBankTransfer | null = null;
+export const MEMBERSHIP_BANK_TRANSFER: MembershipBankTransfer | null = {
+  method: "Easypaisa",
+  accountTitle: "Haider Jalal",
+  accountNumber: "03438067821",
+  iban: null,
+};
 
 /**
  * The agreed refund and cancellation policy for membership fees, shown to customers. Null until the policy has been
