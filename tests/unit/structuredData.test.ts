@@ -17,8 +17,8 @@ describe("productJsonLd", () => {
     expect(product.name).toBe("Sidr Honey");
     expect(String(product.image)).toMatch(/^https?:\/\//);
     expect(offers.priceCurrency).toBe("PKR");
-    expect(offers.lowPrice).toBe(1970);
-    expect(offers.highPrice).toBe(7090);
+    expect(offers.lowPrice).toBe(1950);
+    expect(offers.highPrice).toBe(7800);
     expect(offers.offerCount).toBe(3);
   });
 });

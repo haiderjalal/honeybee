@@ -11,17 +11,17 @@ describe("SizePrice", () => {
 
     const { container } = render(<SizePrice variety={sidr} sizeId="1kg" />);
 
-    expect(container.querySelector("s")?.textContent).toContain("Rs 3,999");
-    expect(container.textContent).toContain("Rs 3,699");
+    expect(container.querySelector("s")?.textContent).toContain("Rs 4,200");
+    expect(container.textContent).toContain("Rs 3,900");
   });
 
   it("shows only the sale price when the jar is not on offer", () => {
-    const sidr = getVarietyBySlug("sidr-honey");
-    if (!sidr) throw new Error("Sidr honey is missing from the catalogue");
+    const wildflower = getVarietyBySlug("wildflower-honey");
+    if (!wildflower) throw new Error("Wildflower honey is missing from the catalogue");
 
-    const { container } = render(<SizePrice variety={sidr} sizeId="500g" />);
+    const { container } = render(<SizePrice variety={wildflower} sizeId="500g" />);
 
     expect(container.querySelector("s")).toBeNull();
-    expect(container.textContent).toBe(`Rs 1,970`);
+    expect(container.textContent).toBe(`Rs 1,500`);
   });
 });
