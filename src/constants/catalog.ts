@@ -29,8 +29,9 @@ export const HONEY_VARIETIES: readonly HoneyVariety[] = [
     tastingNotes: ["Caramel", "Toasted malt", "Buttery finish"],
     bestFor: ["A morning spoonful", "Warm water and lemon", "Gifting"],
     palette: { light: "#f3a943", base: "#b9650f", deep: "#5e2905" },
-    prices: { "500g": 1970, "1kg": 3699, "2kg": 7090 },
-    listPrices: { "1kg": 3999 },
+    // Sidr is sold at Rs 3,900 per kg, struck through from Rs 4,200 per kg.
+    prices: { "500g": 1950, "1kg": 3900, "2kg": 7800 },
+    listPrices: { "500g": 2100, "1kg": 4200, "2kg": 8400 },
   },
   {
     slug: "acacia-honey",

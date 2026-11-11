@@ -23,7 +23,7 @@ describe("catalog", () => {
   });
 
   it("resolves priced variants and rejects unknown ones", () => {
-    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(3699);
+    expect(getPricedVariant("sidr-honey", "1kg")?.unitPrice).toBe(3900);
     expect(getPricedVariant("sidr-honey", "5kg")).toBeNull();
     expect(getPricedVariant("manuka", "1kg")).toBeNull();
     expect(getVarietyBySlug("nope")).toBeNull();
@@ -36,8 +36,10 @@ describe("catalog", () => {
 
   it("shows the original price only for jars on offer", () => {
     const sidr = getVarietyBySlug("sidr-honey");
-    expect(sidr && getListPrice(sidr, "1kg")).toBe(3999);
-    expect(sidr && getListPrice(sidr, "500g")).toBeNull();
+    expect(sidr && getListPrice(sidr, "1kg")).toBe(4200);
+    expect(sidr && getListPrice(sidr, "500g")).toBe(2100);
+    const wildflower = getVarietyBySlug("wildflower-honey");
+    expect(wildflower && getListPrice(wildflower, "1kg")).toBeNull();
   });
 });
 

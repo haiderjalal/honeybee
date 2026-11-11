@@ -68,7 +68,7 @@ describe("InquiryService with membership", () => {
     );
     expect(sent[0].membership).toEqual({ discountMinor: 35_000 });
     // The subtotal stays the regular-price total. The discount is applied separately in the emails.
-    expect(sent[0].subtotal).toBe(1970 * 2);
+    expect(sent[0].subtotal).toBe(1950 * 2);
   });
 
   it("releases the reservation when the owner notification fails, so the allowance is not lost", async () => {

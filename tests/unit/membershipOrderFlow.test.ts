@@ -48,20 +48,20 @@ afterAll(async () => {
   await db.close();
 }, DATABASE_HOOK_TIMEOUT_MS);
 
-/** A Sidr 500 g jar is Rs 1,970 at regular price, so two jars clear the Rs 3,000 minimum. */
-function sidrLine(quantity: number): OrderLine {
+/** Wildflower 1 kg is Rs 2,800 at regular price and not on sale, so membership applies to it. */
+function eligibleLine(quantity: number): OrderLine {
   return {
-    varietySlug: "sidr-honey",
-    sizeId: "500g",
-    name: "Sidr Honey",
-    sizeLabel: "500 g",
+    varietySlug: "wildflower-honey",
+    sizeId: "1kg",
+    name: "Wildflower Honey",
+    sizeLabel: "1 kg",
     quantity,
-    unitPrice: 1970,
-    lineTotal: 1970 * quantity,
+    unitPrice: 2800,
+    lineTotal: 2800 * quantity,
   };
 }
 
-/** Sidr 1 kg is on sale (list Rs 3,999, now Rs 3,699), so membership does not apply to it. */
+/** Sidr 1 kg is on sale (list Rs 4,200, now Rs 3,900 per kg), so membership does not apply to it. */
 function saleLine(): OrderLine {
   return {
     varietySlug: "sidr-honey",
@@ -69,8 +69,8 @@ function saleLine(): OrderLine {
     name: "Sidr Honey",
     sizeLabel: "1 kg",
     quantity: 1,
-    unitPrice: 3699,
-    lineTotal: 3699,
+    unitPrice: 3900,
+    lineTotal: 3900,
   };
 }
 
@@ -128,11 +128,11 @@ describe("member discount at order creation", () => {
     const reservation = await port.reserve({
       customerUserId: userId,
       orderReference: "HB-FLOW-1",
-      lines: [sidrLine(2)],
+      lines: [eligibleLine(2)],
       now: NOW,
     });
 
-    // 2 × Rs 1,970 = Rs 3,940. Ten percent would be Rs 394, which is capped at Rs 350 per order.
+    // 2 × Rs 2,800 = Rs 5,600. Ten percent would be Rs 560, which is capped at Rs 350 per order.
     expect(reservation).toEqual({ discountMinor: MEMBERSHIP.maxDiscountPerOrderMinor });
     const snapshot = await repo.getAccountSnapshot(userId);
     expect(snapshot.redemptions).toEqual([
@@ -148,7 +148,7 @@ describe("member discount at order creation", () => {
     const userId = await activateMember();
     const quote = await quoteMemberDiscount(repo, {
       customerUserId: userId,
-      lines: [{ lineKey: "sidr-honey:500g", quantity: 2, lineTotalMinor: 394_000, onSale: false }],
+      lines: [{ lineKey: "wildflower-honey:1kg", quantity: 2, lineTotalMinor: 394_000, onSale: false }],
       now: NOW,
     });
 
@@ -176,7 +176,7 @@ describe("member discount at order creation", () => {
     const reservation = await port.reserve({
       customerUserId: await db.createUser(),
       orderReference: "HB-FLOW-NONE",
-      lines: [sidrLine(2)],
+      lines: [eligibleLine(2)],
       now: NOW,
     });
     expect(reservation).toBeNull();
@@ -185,7 +185,7 @@ describe("member discount at order creation", () => {
   it("releases a reservation once and ignores repeated releases", async () => {
     const userId = await activateMember();
     const port = createOrderMembershipPort(repo);
-    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-REL", lines: [sidrLine(2)], now: NOW });
+    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-REL", lines: [eligibleLine(2)], now: NOW });
 
     await port.release("HB-FLOW-REL");
     await port.release("HB-FLOW-REL");
@@ -200,8 +200,8 @@ describe("member discount at order creation", () => {
     const userId = await activateMember();
     const port = createOrderMembershipPort(repo);
 
-    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-DUP", lines: [sidrLine(2)], now: NOW });
-    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-DUP", lines: [sidrLine(2)], now: NOW });
+    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-DUP", lines: [eligibleLine(2)], now: NOW });
+    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-DUP", lines: [eligibleLine(2)], now: NOW });
 
     expect((await repo.getAccountSnapshot(userId)).terms[0].discountsReserved).toBe(1);
   });
@@ -214,7 +214,7 @@ describe("member discount at order creation", () => {
       const reservation = await port.reserve({
         customerUserId: userId,
         orderReference: `HB-FLOW-SIX-${index}`,
-        lines: [sidrLine(2)],
+        lines: [eligibleLine(2)],
         now: NOW,
       });
       expect(reservation).not.toBeNull();
@@ -223,7 +223,7 @@ describe("member discount at order creation", () => {
     const seventh = await port.reserve({
       customerUserId: userId,
       orderReference: "HB-FLOW-SIX-7",
-      lines: [sidrLine(2)],
+      lines: [eligibleLine(2)],
       now: NOW,
     });
     expect(seventh).toBeNull();
@@ -235,7 +235,7 @@ describe("fulfilment and refunds through the service", () => {
   it("consumes on fulfilment, refunds part of an order, and restores the benefit on the final refund without extending the term", async () => {
     const userId = await activateMember();
     const port = createOrderMembershipPort(repo);
-    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-REF", lines: [sidrLine(2)], now: NOW });
+    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-REF", lines: [eligibleLine(2)], now: NOW });
     const termBefore = (await repo.getAccountSnapshot(userId)).terms[0];
 
     expect(
@@ -243,7 +243,7 @@ describe("fulfilment and refunds through the service", () => {
     ).toBe("consumed");
     const partial = await refundMemberOrder(repo, {
       orderReference: "HB-FLOW-REF",
-      refund: [{ lineKey: "sidr-honey:500g", quantity: 1 }],
+      refund: [{ lineKey: "wildflower-honey:1kg", quantity: 1 }],
       audit: { actor: "admin@honeyb.test", reason: "Test fulfilment" },
     });
     expect(partial).toMatchObject({ status: "consumed", isFullRefund: false });
@@ -251,7 +251,7 @@ describe("fulfilment and refunds through the service", () => {
 
     const full = await refundMemberOrder(repo, {
       orderReference: "HB-FLOW-REF",
-      refund: [{ lineKey: "sidr-honey:500g", quantity: 1 }],
+      refund: [{ lineKey: "wildflower-honey:1kg", quantity: 1 }],
       audit: { actor: "admin@honeyb.test", reason: "Test fulfilment" },
     });
     expect(full).toMatchObject({ status: "restored", isFullRefund: true });
@@ -264,12 +264,12 @@ describe("fulfilment and refunds through the service", () => {
   it("refuses a refund on an order that was never fulfilled", async () => {
     const userId = await activateMember();
     const port = createOrderMembershipPort(repo);
-    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-UNF", lines: [sidrLine(2)], now: NOW });
+    await port.reserve({ customerUserId: userId, orderReference: "HB-FLOW-UNF", lines: [eligibleLine(2)], now: NOW });
 
     await expect(
       refundMemberOrder(repo, {
         orderReference: "HB-FLOW-UNF",
-        refund: [{ lineKey: "sidr-honey:500g", quantity: 1 }],
+        refund: [{ lineKey: "wildflower-honey:1kg", quantity: 1 }],
         audit: { actor: "admin@honeyb.test", reason: "Test fulfilment" },
       }),
     ).rejects.toThrow("membership: not_fulfilled");
