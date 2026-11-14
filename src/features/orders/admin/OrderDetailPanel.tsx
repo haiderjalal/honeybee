@@ -1,6 +1,7 @@
 import { formatPkrMinor } from "@/utils/formatPkr";
 import type { CustomerOrderDetail } from "@/services/customerOrder.repository";
 
+import { HoneycombToggleForm } from "./HoneycombToggleForm";
 import { OrderStatusForm } from "./OrderStatusForm";
 import { ORDER_STATUS_LABELS, formatOrderDate } from "./orderDisplay";
 
@@ -100,6 +101,11 @@ export function OrderDetailPanel({ order }: OrderDetailPanelProps): JSX.Element 
       <div className="border-t border-cream-50/10 pt-6">
         <h3 className="mb-4 font-display text-2xl text-cream-50">Update status</h3>
         <OrderStatusForm reference={order.reference} currentStatus={order.status} />
+      </div>
+
+      <div className="border-t border-cream-50/10 pt-6">
+        <h3 className="mb-4 font-display text-2xl text-cream-50">Honeycomb</h3>
+        <HoneycombToggleForm reference={order.reference} shown={order.showOnHoneycomb} />
       </div>
     </section>
   );
