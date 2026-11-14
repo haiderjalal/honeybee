@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { ROUTES } from "@/constants/routes";
 import { describeMembershipError } from "@/features/membership/membershipErrorCopy";
+import { cleanHoneycombName } from "@/features/honeycomb/honeycombLayout";
 import { logger } from "@/lib/logger";
 import { getMembershipAdmin } from "@/lib/membership/access";
 import { getCustomerOrderRepository } from "@/lib/supabase/customerOrderRepository";
@@ -16,8 +17,8 @@ const referenceSchema = z.object({
 });
 
 /**
- * Shows or hides a customer on the public honeycomb. Only an admin can do this, and it is recorded in the audit log.
- * It should be switched on only after the customer has agreed to be shown.
+ * Shows or hides a customer on the public honeycomb, and sets the name on the cell. Only an admin can do this, and it
+ * is recorded in the audit log. Switch it on only after the customer has agreed to be shown.
  */
 export async function setHoneycombAction(_previous: OrderActionState, formData: FormData): Promise<OrderActionState> {
   const admin = await getMembershipAdmin();
@@ -29,11 +30,15 @@ export async function setHoneycombAction(_previous: OrderActionState, formData: 
     return { status: "error", message: parsed.error.issues[0]?.message ?? "Choose an order to update." };
   }
 
+  const name = cleanHoneycombName(String(formData.get("display_name") ?? ""));
+  if (!name.ok) return { status: "error", message: name.message };
+
   const show = formData.get("show") === "on";
   try {
     await repo.setHoneycomb({
       reference: parsed.data.reference,
       show,
+      displayName: name.value,
       actor: admin.email?.trim() || admin.id,
       reason: show ? "Shown on the public honeycomb after the customer agreed" : "Hidden from the public honeycomb",
     });
@@ -42,8 +47,8 @@ export async function setHoneycombAction(_previous: OrderActionState, formData: 
     return {
       status: "ok",
       message: show
-        ? "The customer is now in the honeycomb family."
-        : "The customer has been removed from the honeycomb.",
+        ? "Saved. The customer is in the honeycomb family."
+        : "Saved. The customer has been removed from the honeycomb.",
     };
   } catch (error) {
     logger.error("Honeycomb change failed", { reference: parsed.data.reference, error });

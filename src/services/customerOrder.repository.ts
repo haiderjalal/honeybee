@@ -47,6 +47,8 @@ export interface CustomerOrderDetail extends CustomerOrderSummary {
   address: string;
   referral: string | null;
   notes: string | null;
+  /** The name chosen for the honeycomb cell, if any. */
+  honeycombName: string | null;
   updatedAt: Date;
   items: {
     lineKey: string;
@@ -61,6 +63,8 @@ export interface CustomerOrderDetail extends CustomerOrderSummary {
 /** One cell of the public honeycomb. Only what the public page needs. */
 export interface HoneycombEntry {
   id: string;
+  /** The name an admin chose for the cell, if any. */
+  displayName: string | null;
   customerName: string;
   createdAt: Date;
 }
@@ -85,6 +89,7 @@ interface RawSummary {
   total_minor: number;
   created_at: string;
   show_on_honeycomb?: boolean;
+  honeycomb_name?: string | null;
 }
 
 interface RawItem {
@@ -181,6 +186,7 @@ export class CustomerOrderRepository {
             referral: string | null;
             notes: string | null;
             updated_at: string;
+            honeycomb_name: string | null;
           })
         | null;
       items: RawItem[];
@@ -192,6 +198,7 @@ export class CustomerOrderRepository {
       address: raw.order.address,
       referral: raw.order.referral,
       notes: raw.order.notes,
+      honeycombName: raw.order.honeycomb_name ?? null,
       updatedAt: new Date(raw.order.updated_at),
       items: raw.items.map(mapItem),
     };
@@ -217,12 +224,15 @@ export class CustomerOrderRepository {
   async setHoneycomb(input: {
     reference: string;
     show: boolean;
+    /** The name shown on the cell. Null clears it. Leave undefined to keep the current name. */
+    displayName?: string | null;
     actor: string;
     reason: string;
   }): Promise<CustomerOrderSummary> {
     const raw = await this.call<RawSummary>("customer_order_set_honeycomb", {
       reference: input.reference,
       show: input.show,
+      display_name: input.displayName,
       actor: input.actor,
       reason: input.reason,
     });
@@ -231,12 +241,12 @@ export class CustomerOrderRepository {
 
   /** The public honeycomb: first names and dates of agreed orders, oldest first. Nothing else about the customer. */
   async honeycombEntries(limit: number): Promise<HoneycombEntry[]> {
-    const raw = await this.call<{ id: string; customer_name: string; created_at: string }[]>(
-      "customer_orders_honeycomb",
-      { limit },
-    );
+    const raw = await this.call<
+      { id: string; customer_name: string; honeycomb_name: string | null; created_at: string }[]
+    >("customer_orders_honeycomb", { limit });
     return raw.map((row) => ({
       id: row.id,
+      displayName: row.honeycomb_name ?? null,
       customerName: row.customer_name,
       createdAt: new Date(row.created_at),
     }));

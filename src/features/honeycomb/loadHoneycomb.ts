@@ -24,7 +24,7 @@ export async function loadHoneycombEntries(): Promise<HoneycombCellView[]> {
     const entries = await repo.honeycombEntries(HONEYCOMB_MAX_CELLS);
     return entries.map((entry) => ({
       id: entry.id,
-      displayName: formatHoneycombName(entry.customerName),
+      displayName: entry.displayName ?? formatHoneycombName(entry.customerName),
       joinedOn: joinedDate.format(entry.createdAt),
     }));
   } catch (error) {

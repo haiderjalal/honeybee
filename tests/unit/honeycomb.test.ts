@@ -61,7 +61,7 @@ describe("the honeycomb family", () => {
 
     const entries = await repo.honeycombEntries(200);
     expect(entries.map((entry) => entry.customerName)).toEqual(["Saba Anjum Babar", "Faizan", "Abdul Rahman"]);
-    expect(Object.keys(entries[0]).sort()).toEqual(["createdAt", "customerName", "id"]);
+    expect(Object.keys(entries[0]).sort()).toEqual(["createdAt", "customerName", "displayName", "id"]);
   });
 
   it("removes a customer from the honeycomb when the switch is turned off", async () => {
@@ -93,6 +93,53 @@ describe("the honeycomb family", () => {
     await expect(
       repo.setHoneycomb({ reference: "HB-HONEY-0001", show: false, actor: "admin@honeyb.test", reason: "   " }),
     ).rejects.toThrow("membership: reason_required");
+  });
+
+  it("shows the name the admin chose on the cell", async () => {
+    await repo.setHoneycomb({
+      reference: "HB-HONEY-0002",
+      show: true,
+      displayName: "Abdul R.",
+      actor: "admin@honeyb.test",
+      reason: "Name agreed with the customer",
+    });
+    const entry = (await repo.honeycombEntries(200)).find((item) => item.customerName === "Abdul Rahman");
+    expect(entry?.displayName).toBe("Abdul R.");
+  });
+
+  it("keeps the chosen name when a later change does not send one", async () => {
+    await repo.setHoneycomb({
+      reference: "HB-HONEY-0002",
+      show: true,
+      actor: "admin@honeyb.test",
+      reason: "Re-confirmed",
+    });
+    const entry = (await repo.honeycombEntries(200)).find((item) => item.customerName === "Abdul Rahman");
+    expect(entry?.displayName).toBe("Abdul R.");
+  });
+
+  it("clears the chosen name when it is blank", async () => {
+    await repo.setHoneycomb({
+      reference: "HB-HONEY-0002",
+      show: true,
+      displayName: null,
+      actor: "admin@honeyb.test",
+      reason: "Name removed",
+    });
+    const entry = (await repo.honeycombEntries(200)).find((item) => item.customerName === "Abdul Rahman");
+    expect(entry?.displayName).toBeNull();
+  });
+
+  it("refuses a chosen name longer than 30 characters", async () => {
+    await expect(
+      repo.setHoneycomb({
+        reference: "HB-HONEY-0002",
+        show: true,
+        displayName: "A".repeat(31),
+        actor: "admin@honeyb.test",
+        reason: "Too long",
+      }),
+    ).rejects.toThrow("membership: invalid_honeycomb_name");
   });
 
   it("caps the list at the size asked for", async () => {

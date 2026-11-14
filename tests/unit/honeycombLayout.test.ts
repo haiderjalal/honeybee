@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  cleanHoneycombName,
   fitHoneycombName,
   formatHoneycombName,
   hexagonPoints,
+  HONEYCOMB_NAME_MAX_LENGTH,
   layoutHoneycomb,
 } from "@/features/honeycomb/honeycombLayout";
 
@@ -65,5 +67,34 @@ describe("fitHoneycombName", () => {
   it("leaves short names alone and shortens long ones", () => {
     expect(fitHoneycombName("Faizan")).toBe("Faizan");
     expect(fitHoneycombName("Maryam Shehzadi")).toBe("Maryam Sh…");
+  });
+});
+
+describe("cleanHoneycombName", () => {
+  it("treats a blank name as no choice", () => {
+    expect(cleanHoneycombName("")).toEqual({ ok: true, value: null });
+    expect(cleanHoneycombName("   ")).toEqual({ ok: true, value: null });
+  });
+
+  it("trims the name and collapses extra spaces", () => {
+    expect(cleanHoneycombName("  Faizan    A.  ")).toEqual({ ok: true, value: "Faizan A." });
+  });
+
+  it("accepts letters, dots, hyphens and apostrophes", () => {
+    expect(cleanHoneycombName("Mary-Jane O'Neil")).toEqual({ ok: true, value: "Mary-Jane O'Neil" });
+    expect(cleanHoneycombName("Zoë K.")).toEqual({ ok: true, value: "Zoë K." });
+  });
+
+  it("refuses digits and markup", () => {
+    expect(cleanHoneycombName("Faizan 2")).toMatchObject({ ok: false });
+    expect(cleanHoneycombName("<b>Faizan</b>")).toMatchObject({ ok: false });
+  });
+
+  it("allows up to the maximum length and no more", () => {
+    expect(cleanHoneycombName("A".repeat(HONEYCOMB_NAME_MAX_LENGTH))).toEqual({
+      ok: true,
+      value: "A".repeat(HONEYCOMB_NAME_MAX_LENGTH),
+    });
+    expect(cleanHoneycombName("A".repeat(HONEYCOMB_NAME_MAX_LENGTH + 1))).toMatchObject({ ok: false });
   });
 });
