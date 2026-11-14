@@ -76,3 +76,23 @@ export function formatHoneycombName(fullName: string): string {
 export function fitHoneycombName(name: string, maxLength = 10): string {
   return name.length <= maxLength ? name : `${name.slice(0, maxLength - 1)}…`;
 }
+
+export const HONEYCOMB_NAME_MAX_LENGTH = 30;
+
+export type CleanHoneycombNameResult = { ok: true; value: string | null } | { ok: false; message: string };
+
+/**
+ * Checks a name an admin types for a cell. A blank name clears the choice. Only letters, spaces, dots, hyphens and
+ * apostrophes are allowed, so a cell can't carry digits or markup.
+ */
+export function cleanHoneycombName(raw: string): CleanHoneycombNameResult {
+  const value = raw.trim().replace(/\s+/g, " ");
+  if (value === "") return { ok: true, value: null };
+  if (value.length > HONEYCOMB_NAME_MAX_LENGTH) {
+    return { ok: false, message: `Keep the name under ${HONEYCOMB_NAME_MAX_LENGTH} characters.` };
+  }
+  if (!/^[\p{L}\p{M} .'’-]+$/u.test(value)) {
+    return { ok: false, message: "Use letters, spaces, dots, hyphens or apostrophes only." };
+  }
+  return { ok: true, value };
+}

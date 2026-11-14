@@ -3,6 +3,8 @@
 import { useActionState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { InputField } from "@/components/ui/Field";
+import { HONEYCOMB_NAME_MAX_LENGTH } from "@/features/honeycomb/honeycombLayout";
 
 import { setHoneycombAction } from "./honeycombActions";
 import { ORDER_ACTION_IDLE } from "./orderActionState";
@@ -12,10 +14,12 @@ import type { ReactElement } from "react";
 interface HoneycombToggleFormProps {
   reference: string;
   shown: boolean;
+  /** The name currently chosen for the cell. Blank means the name is generated from the customer's name. */
+  displayName: string | null;
 }
 
-/** The admin's switch for showing a customer on the public honeycomb. It is off until the customer agrees. */
-export function HoneycombToggleForm({ reference, shown }: HoneycombToggleFormProps): ReactElement {
+/** The admin's switch and name for a customer's honeycomb cell. Off until the customer agrees to be shown. */
+export function HoneycombToggleForm({ reference, shown, displayName }: HoneycombToggleFormProps): ReactElement {
   const [state, formAction, isPending] = useActionState(setHoneycombAction, ORDER_ACTION_IDLE);
 
   return (
@@ -26,10 +30,19 @@ export function HoneycombToggleForm({ reference, shown }: HoneycombToggleFormPro
         <span>
           Show this customer on the public honeycomb
           <span className="mt-1 block text-sm text-cream-500">
-            Their first name and last initial appear on the homepage. Turn this on only after the customer agrees.
+            Their name appears on the homepage. Turn this on only after the customer agrees.
           </span>
         </span>
       </label>
+      <InputField
+        id="honeycomb-display-name"
+        name="display_name"
+        label="Name on the cell"
+        hint={`Leave blank to show the first name and last initial. Up to ${HONEYCOMB_NAME_MAX_LENGTH} characters, such as Faizan A.`}
+        defaultValue={displayName ?? ""}
+        maxLength={HONEYCOMB_NAME_MAX_LENGTH}
+        autoComplete="off"
+      />
       <div className="flex flex-wrap items-center gap-4">
         <Button type="submit" variant="secondary" disabled={isPending}>
           {isPending ? "Saving…" : "Save honeycomb choice"}

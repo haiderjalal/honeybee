@@ -105,7 +105,11 @@ export function OrderDetailPanel({ order }: OrderDetailPanelProps): JSX.Element 
 
       <div className="border-t border-cream-50/10 pt-6">
         <h3 className="mb-4 font-display text-2xl text-cream-50">Honeycomb</h3>
-        <HoneycombToggleForm reference={order.reference} shown={order.showOnHoneycomb} />
+        <HoneycombToggleForm
+          reference={order.reference}
+          shown={order.showOnHoneycomb}
+          displayName={order.honeycombName}
+        />
       </div>
     </section>
   );
