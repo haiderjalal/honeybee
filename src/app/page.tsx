@@ -10,6 +10,8 @@ import { HoneyLabSection } from "@/features/honey-lab/HoneyLabSection";
 import { SwarmIntro } from "@/features/intro/SwarmIntro";
 import { CtaBand } from "@/features/marketing/CtaBand";
 import { Faq } from "@/features/marketing/Faq";
+import { HoneycombWall } from "@/features/honeycomb/HoneycombWall";
+import { loadHoneycombEntries } from "@/features/honeycomb/loadHoneycomb";
 import { Process } from "@/features/marketing/Process";
 import { Promises } from "@/features/marketing/Promises";
 import { PourStory } from "@/features/pour-story/PourStory";
@@ -20,8 +22,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
+// The honeycomb of customers changes as orders come in, so the page refreshes every five minutes.
+export const revalidate = 300;
+
+export default async function HomePage() {
   const varieties = getVarieties();
+  const honeycomb = await loadHoneycombEntries();
 
   return (
     <>
@@ -37,6 +43,8 @@ export default function HomePage() {
       <SectionDivider />
       <Promises />
       <Process />
+      <SectionDivider />
+      <HoneycombWall entries={honeycomb} />
       <SectionDivider />
       <Faq />
       <SectionDivider />

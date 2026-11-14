@@ -39,6 +39,7 @@ export interface CustomerOrderSummary {
   membershipDiscountMinor: number;
   totalMinor: number;
   createdAt: Date;
+  showOnHoneycomb: boolean;
 }
 
 export interface CustomerOrderDetail extends CustomerOrderSummary {
@@ -55,6 +56,13 @@ export interface CustomerOrderDetail extends CustomerOrderSummary {
     unitPriceMinor: number;
     lineTotalMinor: number;
   }[];
+}
+
+/** One cell of the public honeycomb. Only what the public page needs. */
+export interface HoneycombEntry {
+  id: string;
+  customerName: string;
+  createdAt: Date;
 }
 
 export interface SearchCustomerOrdersInput {
@@ -76,6 +84,7 @@ interface RawSummary {
   membership_discount_minor: number;
   total_minor: number;
   created_at: string;
+  show_on_honeycomb?: boolean;
 }
 
 interface RawItem {
@@ -98,6 +107,7 @@ const mapSummary = (raw: RawSummary): CustomerOrderSummary => ({
   membershipDiscountMinor: raw.membership_discount_minor,
   totalMinor: raw.total_minor,
   createdAt: new Date(raw.created_at),
+  showOnHoneycomb: raw.show_on_honeycomb === true,
 });
 
 const mapItem = (raw: RawItem) => ({
@@ -201,5 +211,34 @@ export class CustomerOrderRepository {
       reason: input.reason,
     });
     return mapSummary(raw);
+  }
+
+  /** Shows or hides one order on the public honeycomb. The change and its audit entry are written together. */
+  async setHoneycomb(input: {
+    reference: string;
+    show: boolean;
+    actor: string;
+    reason: string;
+  }): Promise<CustomerOrderSummary> {
+    const raw = await this.call<RawSummary>("customer_order_set_honeycomb", {
+      reference: input.reference,
+      show: input.show,
+      actor: input.actor,
+      reason: input.reason,
+    });
+    return mapSummary(raw);
+  }
+
+  /** The public honeycomb: first names and dates of agreed orders, oldest first. Nothing else about the customer. */
+  async honeycombEntries(limit: number): Promise<HoneycombEntry[]> {
+    const raw = await this.call<{ id: string; customer_name: string; created_at: string }[]>(
+      "customer_orders_honeycomb",
+      { limit },
+    );
+    return raw.map((row) => ({
+      id: row.id,
+      customerName: row.customer_name,
+      createdAt: new Date(row.created_at),
+    }));
   }
 }
